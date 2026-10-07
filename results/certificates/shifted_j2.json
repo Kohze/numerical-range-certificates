@@ -1,0 +1,175 @@
+{
+  "algorithm": "rational-gershgorin-polygon-v1",
+  "assumption": "Numerical-radius power inequality: C = 2 for Richardson powers (m >= 1), unconditional",
+  "constant_upper": "2",
+  "evidence": {
+    "best_certified_iterations": null,
+    "best_method": null,
+    "bound_squared": null,
+    "comparison_methods": [
+      "numerical_range",
+      "induced_norm"
+    ],
+    "comparison_scope": "Only numerical-range and one-step induced-norm bounds; excludes direct powers",
+    "induced_norm_baseline": {
+      "bound_squared": null,
+      "iterations": null,
+      "q_upper_squared": "4",
+      "status": "no_geometric_contraction"
+    },
+    "iterations": null,
+    "maximizing_vertex": [
+      "2",
+      "113858157053/274877906944"
+    ],
+    "previous_bound_squared": null,
+    "q_upper": "297525702509/274877906944",
+    "q_upper_squared": "88521543653419937063945/75557863725914323419136",
+    "status": "no_geometric_contraction",
+    "tolerance_squared": "1/10000000000000000"
+  },
+  "request": {
+    "alpha": "1",
+    "direction_resolution": 1,
+    "kind": "richardson",
+    "matrix": [
+      [
+        "1",
+        "2"
+      ],
+      [
+        "0",
+        "1"
+      ]
+    ],
+    "max_iterations": 10000,
+    "mode": "established",
+    "sqrt_bits": 40,
+    "tolerance": "1/100000000"
+  },
+  "schema": "nrcert/1",
+  "support_evidence": [
+    {
+      "gershgorin_row_uppers": [
+        "113858157053/274877906944",
+        "113858157053/274877906944"
+      ],
+      "normal": [
+        -1,
+        -1
+      ],
+      "upper": "113858157053/274877906944"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "0",
+        "0"
+      ],
+      "normal": [
+        -1,
+        0
+      ],
+      "upper": "0"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "113858157053/274877906944",
+        "113858157053/274877906944"
+      ],
+      "normal": [
+        -1,
+        1
+      ],
+      "upper": "113858157053/274877906944"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "1",
+        "1"
+      ],
+      "normal": [
+        0,
+        -1
+      ],
+      "upper": "1"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "1",
+        "1"
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "upper": "1"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "663613970941/274877906944",
+        "663613970941/274877906944"
+      ],
+      "normal": [
+        1,
+        -1
+      ],
+      "upper": "663613970941/274877906944"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "2",
+        "2"
+      ],
+      "normal": [
+        1,
+        0
+      ],
+      "upper": "2"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "663613970941/274877906944",
+        "663613970941/274877906944"
+      ],
+      "normal": [
+        1,
+        1
+      ],
+      "upper": "663613970941/274877906944"
+    }
+  ],
+  "vertices": [
+    [
+      "0",
+      "-113858157053/274877906944"
+    ],
+    [
+      "161019749891/274877906944",
+      "-1"
+    ],
+    [
+      "388736063997/274877906944",
+      "-1"
+    ],
+    [
+      "2",
+      "-113858157053/274877906944"
+    ],
+    [
+      "2",
+      "113858157053/274877906944"
+    ],
+    [
+      "388736063997/274877906944",
+      "1"
+    ],
+    [
+      "161019749891/274877906944",
+      "1"
+    ],
+    [
+      "0",
+      "113858157053/274877906944"
+    ]
+  ]
+}

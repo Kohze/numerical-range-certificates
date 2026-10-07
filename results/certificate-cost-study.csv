@@ -1,0 +1,11 @@
+fixture,category,dimension,mode,numerical_range_iterations,one_step_iterations,direct_power_iterations,direct_power_status,direct_power_cap,construction_median_seconds,checking_median_seconds,norm_only_median_seconds,direct_power_median_seconds,certificate_json_bytes,direct_power_json_bytes
+normal,analytic control,2,established,18,17,17,target_certified,64,0.0010516,0.0010736,7.74e-05,0.0004488,1647,649
+bidiagonal32,analytic control,32,established,13,12,12,target_certified,64,0.0857778,0.0859032,0.0071401,0.0695841,13802,4785
+coupled32,analytic control,32,established,31,113,11,target_certified,64,0.0843641,0.0850997,0.007162,0.0729247,14185,5074
+shifted_j2,analytic control,2,established,,,2,target_certified,64,0.0011707,0.0011601,4.74e-05,7.92e-05,2132,381
+slow_contraction,analytic control,1,established,1902,1833,,reference_limit,64,0.0039777,0.003956,0.0014683,0.0008612,1695,17327
+nilpotent2_099,analytic counterexample control,2,established,31,1833,2,target_certified,64,0.0027474,0.0027546,0.0014887,7.93e-05,2874,404
+coupled8,analytic control,8,established,31,113,11,target_certified,64,0.006203,0.0062366,0.000536,0.0041241,4585,1002
+reaction_advection_diffusion8,specified finite-difference model,8,established,41,39,29,target_certified,64,0.0062806,0.0062911,0.0005341,0.0127341,4860,4784
+reaction_advection_diffusion16,specified finite-difference model,16,established,121,116,,reference_limit,64,0.0224966,0.0227311,0.0019555,0.133985,7638,21332
+reaction_advection_diffusion32,specified finite-difference model,32,established,427,411,,reference_limit,64,0.0883162,0.0903836,0.0077538,0.7381536,15263,30740

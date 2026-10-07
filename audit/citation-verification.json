@@ -1,0 +1,764 @@
+{
+  "schema": "public-citation-verification/1",
+  "verified_on": "2026-10-07",
+  "scope": "Bibliographic identity and support for the cited statement; not independent proof validation.",
+  "counts": {
+    "distinct_entries": 30,
+    "distinct_cited_entries": 30
+  },
+  "manuscript_sha256": "54c579448fd68dd7578d9100e2f7b13dcb0a950a137c2da9a937f07a2fa3386a",
+  "bibliography_sha256": "802a538d31c3ed7e62bc056a8f15a6e020eca0f159563f04200a50f808da0482",
+  "references": [
+    {
+      "key": "CrouzeixPalencia2017",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://epubs.siam.org/doi/10.1137/17M1116672",
+        "https://arxiv.org/abs/1702.00668"
+      ],
+      "metadata": "Michel Crouzeix and César Palencia. The Numerical Range is a (1+sqrt(2))-Spectral Set. SIAM Journal on Matrix Analysis and Applications 38(2), 649–655 (2017). DOI: 10.1137/17M1116672.",
+      "content_support": "Publisher abstract explicitly says complete (1+sqrt2)-spectral set. The primary paper's complete functional calculus supports the matrix-valued polynomial theorem interface.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          81,
+          199
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "Johnson1978",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://epubs.siam.org/doi/10.1137/0715039"
+      ],
+      "metadata": "Charles R. Johnson. Numerical Determination of the Field of Values of a General Complex Matrix. SIAM Journal on Numerical Analysis 15(3), 595–602 (June 1978). DOI: 10.1137/0715039.",
+      "content_support": "Primary abstract states boundary points/tangents, convergent computation and an error measure. Official Chebfun also documents the directional Hermitian computation.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          96
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "LoiselMaxwell2018",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://epubs.siam.org/doi/10.1137/17M1148608"
+      ],
+      "metadata": "Sébastien Loisel and Peter Maxwell. Path-Following Method to Determine the Field of Values of a Matrix with High Accuracy. SIAM Journal on Matrix Analysis and Applications 39(4), 1726–1749 (2018). DOI: 10.1137/17M1148608.",
+      "content_support": "Primary abstract gives an ODE/path-following algorithm, formal error bounds for specific matrix classes and cost-error comparisons. Current prose preserves those restrictions.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          98
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "Trefethen2010",
+      "scholarly": false,
+      "verified": true,
+      "primary_sources": [
+        "https://www.chebfun.org/examples/linalg/FieldOfValues.html"
+      ],
+      "metadata": "Nick Trefethen. Field of values and numerical abscissa. Official Chebfun example, November 2010. Software documentation.",
+      "content_support": "Page expressly attributes the standard method to Johnson (1978) and includes the FOV implementation.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          101
+        ]
+      },
+      "role": "documentation"
+    },
+    {
+      "key": "BeckermannReichel2009",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://epubs.siam.org/doi/10.1137/080741744"
+      ],
+      "metadata": "Bernhard Beckermann and Lothar Reichel. Error Estimates and Evaluation of Matrix Functions via the Faber Transform. SIAM Journal on Numerical Analysis 47(5), 3849–3883 (2009). DOI: 10.1137/080741744.",
+      "content_support": "Primary abstract directly relates Faber transforms on the field of values to improved polynomial Arnoldi and rational Arnoldi error bounds.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          106
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "CrouzeixGreenbaum2019",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://epubs.siam.org/doi/10.1137/18M1198417",
+        "https://arxiv.org/abs/1803.10904"
+      ],
+      "metadata": "Michel Crouzeix and Anne Greenbaum. Spectral Sets: Numerical Range and Beyond. SIAM Journal on Matrix Analysis and Applications 40(3), 1087–1101 (2019). DOI: 10.1137/18M1198417.",
+      "content_support": "Publisher abstract and primary Section 7 explicitly give GMRES and rational Krylov convergence applications.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          108
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "SaadSchultz1986",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://epubs.siam.org/doi/abs/10.1137/0907058?download=true&journalCode=sijcd4"
+      ],
+      "metadata": "Youcef Saad and Martin H. Schultz. GMRES: A Generalized Minimal Residual Algorithm for Solving Nonsymmetric Linear Systems. SIAM Journal on Scientific and Statistical Computing 7(3), 856–869 (July 1986). DOI: 10.1137/0907058.",
+      "content_support": "Primary abstract says residual-norm minimization over a Krylov subspace at each step. The existing corollary is restricted to the exact mathematical method.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          110,
+          635
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "LoristSchwenninger2026",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://arxiv.org/abs/2608.03841v2",
+        "https://arxiv.org/html/2608.03841v2"
+      ],
+      "metadata": "Emiel Lorist and Felix L. Schwenninger. A solution to Crouzeix's conjecture. arXiv:2608.03841v2, math.CA. Version 1: 4 August 2026; version 2: 17 August 2026.",
+      "content_support": "Actual HTML Theorem 3 states scalar 2-spectrality for bounded Hilbert-space operators and rational functions with poles outside the numerical-range closure. The manuscript labels this as a preprint assertion and does not infer the complete inequality.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          124
+        ]
+      },
+      "role": "dated scholarly arXiv preprint"
+    },
+    {
+      "key": "CrouzeixGreenbaum2026Update",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://arxiv.org/abs/2609.22460v2",
+        "https://arxiv.org/html/2609.22460v2"
+      ],
+      "metadata": "Michel Crouzeix and Anne Greenbaum. Update to: Spectral sets: Numerical range and beyond. arXiv:2609.22460v2, math.NA. Version 1: 18 September 2026; version 2: 23 September 2026.",
+      "content_support": "Actual abstract and text use Lorist–Schwenninger to lower earlier constants, including annular 2-spectral sets and convex regions with circular cutouts. No complete universal claim is attributed.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          126
+        ]
+      },
+      "role": "dated scholarly arXiv preprint"
+    },
+    {
+      "key": "CrouzeixGreenbaum2025",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://arxiv.org/abs/2508.12768v1",
+        "https://arxiv.org/html/2508.12768v1"
+      ],
+      "metadata": "Michel Crouzeix and Anne Greenbaum. A New Proof that the Numerical Range is a Complete 2-Spectral Set for Weighted Shift Matrices. arXiv:2508.12768v1, math.FA. Version 1: 18 August 2025.",
+      "content_support": "Actual HTML defines the weighted-shift matrix class and gives the completely bounded result. It supports the restricted-class prior-art and sharp-control discussion.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          128,
+          834
+        ]
+      },
+      "role": "dated scholarly arXiv preprint"
+    },
+    {
+      "key": "AhagCzyzVirtanen2026",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://arxiv.org/abs/2608.27346v4",
+        "https://arxiv.org/html/2608.27346v4"
+      ],
+      "metadata": "Per Åhag, Rafał Czyż and Jani Virtanen. The Complete Crouzeix Conjecture in Dimension Three and the Clouâtre–Ostermann–Ransford conjecture. arXiv:2608.27346v4, math.CV. Versions: 27 August, 1 September, 9 September, and 21 September 2026.",
+      "content_support": "Actual Theorem 1.1 asserts complete 2-spectrality for base-matrix dimension n <= 3 and arbitrary coefficient size. This directly supports the manuscript's restricted-dimensional claim.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          129
+        ]
+      },
+      "role": "dated scholarly arXiv preprint"
+    },
+    {
+      "key": "OAI:A-direct-proof-of-the-complete-Crouzeix-inequality-September-26-2026",
+      "scholarly": true,
+      "classification": "AI-produced mathematical preprint with source-supplied corporate authorship",
+      "verified": true,
+      "primary_sources": [
+        "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-direct-proof-of-the-complete-Crouzeix-inequality-September-26-2026/README.md",
+        "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-direct-proof-of-the-complete-Crouzeix-inequality-September-26-2026/build/main.tex"
+      ],
+      "metadata": "OpenAI (corporate author supplied by the source). A direct proof of the complete Crouzeix inequality. OpenAI Math Release preprint, manuscript dated 26 September 2026. Exact repository commit: adc7f1241b42e322a6451854ab7e4b4c146bf78a.",
+      "content_support": "Actual source main theorem asserts complete constant 2 for positive base/coefficient dimensions and arbitrary polynomial degree, including degenerate numerical ranges. This verifies the attributed claim, not its proof or Lean compilation.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          131
+        ]
+      },
+      "role": "source-supplied AI-produced mathematical preprint"
+    },
+    {
+      "key": "OpenAIRepository2026",
+      "scholarly": false,
+      "verified": true,
+      "primary_sources": [
+        "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/README.md",
+        "https://api.github.com/repos/openai/math/commits/adc7f1241b42e322a6451854ab7e4b4c146bf78a"
+      ],
+      "metadata": "OpenAI. Repository README at commit adc7f1241b42e322a6451854ab7e4b4c146bf78a. The bibliographic title is a descriptive resource label; the actual heading is Readme. Repository documentation.",
+      "content_support": "README says mathematical manuscripts/supporting artifacts come from an internal model and describes mixed verification stages.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          158
+        ]
+      },
+      "role": "documentation"
+    },
+    {
+      "key": "OpenAIScope325",
+      "scholarly": false,
+      "verified": true,
+      "primary_sources": [
+        "https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/325.md"
+      ],
+      "metadata": "OpenAI. The complete Crouzeix conjecture. Lean scope document for family 325 at commit adc7f1241b42e322a6451854ab7e4b4c146bf78a. Source documentation.",
+      "content_support": "Actual scope text asserts sharp complete constant 2 and lists comparator links. The current paper correctly says scope statement is not an independent compilation report.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          160
+        ]
+      },
+      "role": "documentation"
+    },
+    {
+      "key": "Rump2010",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://www.cambridge.org/core/journals/acta-numerica/article/abs/verification-methods-rigorous-results-using-floatingpoint-arithmetic/770FE58E5293985CCAB770AF09C4F3FF"
+      ],
+      "metadata": "Siegfried M. Rump. Verification methods: Rigorous results using floating-point arithmetic. Acta Numerica 19, 287–449 (2010). DOI: 10.1017/S096249291000005X. Published 10 May 2010.",
+      "content_support": "Primary extract directly discusses mathematically rigorous results from computational verification and floating-point arithmetic.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          220
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "Tadmor2025",
+      "scholarly": true,
+      "verified": true,
+      "primary_sources": [
+        "https://doi.org/10.1002/cpa.22238",
+        "https://math.umd.edu/~tadmor/pub/linear-stability/Tadmor%20RK%20are%20stable%20CPAM2025.pdf"
+      ],
+      "metadata": "Eitan Tadmor. On the stability of Runge–Kutta methods for arbitrarily large systems of ODEs. Communications on Pure and Applied Mathematics 78(4), 821–855 (2025). DOI: 10.1002/cpa.22238. First online 20 November 2024; final issue year 2025.",
+      "content_support": "Section 3.2 equations3.3–3.4 directly support the classical numerical-radius power inequality and norm bound; Sections3–5 demonstrate preexisting RK numerical-range stability applications.",
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          574
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "Crouzeix2007",
+      "metadata": {
+        "authors": [
+          "Michel Crouzeix"
+        ],
+        "title": "Numerical range and functional calculus in Hilbert space",
+        "journal": "Journal of Functional Analysis",
+        "year": 2007,
+        "volume": 244,
+        "number": 2,
+        "pages": "668–690",
+        "doi": "10.1016/j.jfa.2006.10.013"
+      },
+      "primary_sources": [
+        "https://www.sciencedirect.com/science/article/pii/S002212360600440X"
+      ],
+      "verified_content": "Publisher abstract explicitly studies polynomial norm bounds involving numerical range and Hilbert-space functional calculus.",
+      "insertion": "I1",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          91
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "BadeaCrouzeixDelyon2006",
+      "metadata": {
+        "authors": [
+          "Catalin Badea",
+          "Michel Crouzeix",
+          "Bernard Delyon"
+        ],
+        "title": "Convex domains and K-spectral sets",
+        "journal": "Mathematische Zeitschrift",
+        "year": 2006,
+        "volume": 252,
+        "pages": "345–365",
+        "doi": "10.1007/s00209-005-0857-y",
+        "online_date": "2005-08-16",
+        "issue_date": "2006-02"
+      },
+      "primary_sources": [
+        "https://link.springer.com/article/10.1007/s00209-005-0857-y",
+        "https://arxiv.org/abs/math/0501184",
+        "https://arxiv.org/pdf/math/0501184"
+      ],
+      "verified_content": "Actual paper defines scalar/complete K-spectral constants for convex numerical-range domains and discusses the similarity approach, including complete sharp2for two-dimensional matrices.",
+      "insertion": "I1",
+      "date_note": "Use printed issue year2006, not preprint/online year2005.",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          89
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "DelyonDelyon1999",
+      "metadata": {
+        "authors": [
+          "Bernard Delyon",
+          "François Delyon"
+        ],
+        "title": "Generalization of von Neumann's spectral sets and integral representation of operators",
+        "journal": "Bulletin de la Société Mathématique de France",
+        "year": 1999,
+        "volume": 127,
+        "number": 1,
+        "pages": "25–41",
+        "doi": "10.24033/bsmf.2340"
+      },
+      "primary_sources": [
+        "https://smf.emath.fr/node/42955",
+        "https://smf.emath.fr/sites/default/files/2019-01/smf_bull_127_25-41__sample.pdf",
+        "https://www.numdam.org/item/10.24033/bsmf.2340.pdf"
+      ],
+      "verified_content": "Original publisher and its first page state extension of von Neumann spectral-set theory to numerical ranges through integral representations for nonnormal operators.",
+      "insertion": "I1",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          88
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "Beckermann2005",
+      "metadata": {
+        "authors": [
+          "Bernhard Beckermann"
+        ],
+        "title": "Image numérique, GMRES et polynômes de Faber",
+        "journal": "Comptes Rendus Mathematique",
+        "year": 2005,
+        "volume": 340,
+        "number": 11,
+        "pages": "855–860",
+        "doi": "10.1016/j.crma.2005.04.027",
+        "issue_date": "2005-06-01"
+      },
+      "primary_sources": [
+        "https://www.sciencedirect.com/science/article/pii/S1631073X05001755",
+        "https://pro.univ-lille.fr/fileadmin/user_upload/pages_pros/bernhard_beckermann/abs/Beckermann_comptes_rendus.pdf"
+      ],
+      "verified_content": "Author paper explicitly proves a Faber-polynomial operator norm estimate and derives numerical-range GMRES error estimates; publisher confirms final metadata.",
+      "insertion": "I2",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          115
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "GreenbaumPtakStrakos1996",
+      "metadata": {
+        "authors": [
+          "Anne Greenbaum",
+          "Vlastimil Pták",
+          "Zdeněk Strakoš"
+        ],
+        "title": "Any Nonincreasing Convergence Curve Is Possible for GMRES",
+        "journal": "SIAM Journal on Matrix Analysis and Applications",
+        "year": 1996,
+        "volume": 17,
+        "number": 3,
+        "pages": "465–469",
+        "doi": "10.1137/S0895479894275030",
+        "issue_date": "1996-07"
+      },
+      "primary_sources": [
+        "https://epubs.siam.org/doi/abs/10.1137/S0895479894275030?download=true&journalCode=sjmael",
+        "https://www.karlin.mff.cuni.cz/~strakos/publications.html"
+      ],
+      "verified_content": "Primary abstract gives any prescribed positive nonincreasing GMRES residual sequence with any desired eigenvalues; the proposed nonzero-spectrum sentence is a safe restricted formulation.",
+      "insertion": "I2",
+      "date_note": "The publisher's2012online digitization date is not the article year.",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          119
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "EiermannErnst2001",
+      "metadata": {
+        "authors": [
+          "Michael Eiermann",
+          "Oliver G. Ernst"
+        ],
+        "title": "Geometric aspects of the theory of Krylov subspace methods",
+        "journal": "Acta Numerica",
+        "year": 2001,
+        "volume": 10,
+        "pages": "251–312",
+        "doi": "10.1017/S0962492901000046"
+      },
+      "primary_sources": [
+        "https://www.cambridge.org/core/journals/acta-numerica/article/abs/geometric-aspects-of-the-theory-of-krylov-subspace-methods/5D5142ABA62629A62A8272F9F59B6F26"
+      ],
+      "verified_content": "Primary abstract treats orthogonal/minimal residual methods as Hilbert-space approximation problems and develops a geometric error analysis.",
+      "insertion": "I2",
+      "date_note": "Use copyright/issue year2001, despite online publication2003.",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          113
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "Higham2008",
+      "metadata": {
+        "authors": [
+          "Nicholas J. Higham"
+        ],
+        "title": "Functions of Matrices: Theory and Computation",
+        "publisher": "Society for Industrial and Applied Mathematics",
+        "year": 2008,
+        "doi": "10.1137/1.9780898717778"
+      },
+      "primary_sources": [
+        "https://epubs.siam.org/doi/10.1137/1.9780898717778",
+        "https://epubs.siam.org/doi/10.1137/1.9780898717778.fm",
+        "https://eprints.maths.manchester.ac.uk/1067/"
+      ],
+      "verified_content": "Actual publisher chapter excerpts discuss polynomial/contour matrix functions, applications, conditioning and Fréchet derivatives, including a dedicated f(A)b chapter.",
+      "insertion": "I3",
+      "date_note": "2008book year, not2012online digitization. Print/electronic ISBNs differ; proposed entry avoids mixing them.",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          145
+        ]
+      },
+      "role": "published scholarly book"
+    },
+    {
+      "key": "Higham2002",
+      "metadata": {
+        "authors": [
+          "Nicholas J. Higham"
+        ],
+        "title": "Accuracy and Stability of Numerical Algorithms",
+        "edition": 2,
+        "publisher": "Society for Industrial and Applied Mathematics",
+        "year": 2002,
+        "doi": "10.1137/1.9780898718027"
+      },
+      "primary_sources": [
+        "https://epubs.siam.org/doi/book/10.1137/1.9780898718027",
+        "https://epubs.siam.org/doi/10.1137/1.9780898718027.ch5"
+      ],
+      "verified_content": "Publisher chapters1–3 treat forward/backward errors, conditioning and finite arithmetic; chapter5 is explicitly Polynomials, pp93–104.",
+      "insertion": "I5",
+      "date_note": "Keep second edition2002rather than later digital appearance.",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          520
+        ]
+      },
+      "role": "published scholarly book"
+    },
+    {
+      "key": "SimonciniSzyld2003",
+      "metadata": {
+        "authors": [
+          "Valeria Simoncini",
+          "Daniel B. Szyld"
+        ],
+        "title": "Theory of Inexact Krylov Subspace Methods and Applications to Scientific Computing",
+        "journal": "SIAM Journal on Scientific Computing",
+        "year": 2003,
+        "volume": 25,
+        "number": 2,
+        "pages": "454–477",
+        "doi": "10.1137/S1064827502406415"
+      },
+      "primary_sources": [
+        "https://epubs.siam.org/doi/10.1137/S1064827502406415",
+        "https://cris.unibo.it/handle/11585/1036419"
+      ],
+      "verified_content": "Primary abstract supplies a framework and computable criteria for matrix-vector inexactness assuming exact arithmetic in the analysis. The proposed sentence does not claim a universal validated floating-point solver.",
+      "insertion": "I7",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          675
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "Rump2006",
+      "metadata": {
+        "authors": [
+          "Siegfried M. Rump"
+        ],
+        "title": "Verification of Positive Definiteness",
+        "journal": "BIT Numerical Mathematics",
+        "year": 2006,
+        "volume": 46,
+        "number": 2,
+        "pages": "433–452",
+        "doi": "10.1007/s10543-006-0056-1",
+        "online_date": "2006-05-03",
+        "issue_date": "2006-06"
+      },
+      "primary_sources": [
+        "https://link.springer.com/article/10.1007/s10543-006-0056-1",
+        "https://www.tuhh.de/ti3/paper/rump/Ru06c.pdf"
+      ],
+      "verified_content": "Primary abstract gives rigorous sufficient tests for Hermitian positive definiteness via floating-point Cholesky with rounding errors and underflow included. It supports strict support validation, not a blanket test for singular semidefiniteness.",
+      "insertion": "I4",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          282
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "AlMohyHigham2011",
+      "metadata": {
+        "authors": [
+          "Awad H. Al-Mohy",
+          "Nicholas J. Higham"
+        ],
+        "title": "Computing the Action of the Matrix Exponential, with an Application to Exponential Integrators",
+        "journal": "SIAM Journal on Scientific Computing",
+        "year": 2011,
+        "volume": 33,
+        "number": 2,
+        "pages": "488–511",
+        "doi": "10.1137/100788860"
+      },
+      "primary_sources": [
+        "https://epubs.siam.org/doi/10.1137/100788860",
+        "https://eprints.maths.manchester.ac.uk/1591/"
+      ],
+      "verified_content": "Primary abstract specifies scaling and truncated Taylor polynomials, backward-error tolerance, power-norm quantities and exponential-integrator applications. This is prior application motivation, not evidence that our prototype implements that algorithm.",
+      "insertion": "I3",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          149
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "HighamTisseur2000",
+      "metadata": {
+        "authors": [
+          "Nicholas J. Higham",
+          "Françoise Tisseur"
+        ],
+        "title": "A Block Algorithm for Matrix 1-Norm Estimation, with an Application to 1-Norm Pseudospectra",
+        "journal": "SIAM Journal on Matrix Analysis and Applications",
+        "year": 2000,
+        "volume": 21,
+        "number": 4,
+        "pages": "1185–1201",
+        "doi": "10.1137/S0895479899356080"
+      },
+      "primary_sources": [
+        "https://epubs.siam.org/doi/10.1137/S0895479899356080",
+        "https://eprints.maths.manchester.ac.uk/321/1/35608.pdf"
+      ],
+      "verified_content": "Original published Section5 explicitly calls the computed estimate a lower bound. It therefore supports a concrete caution that an estimator needs separate upper validation before serving as c_j in a norm certificate.",
+      "insertion": "I8",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          729
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "LewisOverton2020",
+      "metadata": {
+        "authors": [
+          "A. S. Lewis",
+          "M. L. Overton"
+        ],
+        "title": "Partial Smoothness of the Numerical Radius at Matrices Whose Fields of Values are Disks",
+        "journal": "SIAM Journal on Matrix Analysis and Applications",
+        "year": 2020,
+        "volume": 41,
+        "number": 3,
+        "pages": "1004–1032",
+        "doi": "10.1137/18M1236289",
+        "online_date": "2020-07-14"
+      },
+      "primary_sources": [
+        "https://epubs.siam.org/doi/10.1137/18M1236289",
+        "https://cs.nyu.edu/overton/papers/pdffiles/NumerRad.pdf"
+      ],
+      "verified_content": "Published article equation1.1 explicitly states ||A^k||2<=2r(A)^k, with complex unit vectors in W(A); page1005attributes the older proofs to Berger and Pearcy. Final metadata now checked, superseding the round1unverified publication-data limit.",
+      "insertion": "I6",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          575
+        ]
+      },
+      "role": "published scholarly article"
+    },
+    {
+      "key": "HochbruckOstermann2010",
+      "metadata": {
+        "authors": [
+          "Marlis Hochbruck",
+          "Alexander Ostermann"
+        ],
+        "title": "Exponential integrators",
+        "journal": "Acta Numerica",
+        "year": 2010,
+        "volume": 19,
+        "pages": "209–286",
+        "doi": "10.1017/S0962492910000048"
+      },
+      "primary_sources": [
+        "https://na.math.kit.edu/bibtexbrowser.php?bib=db%2Fpublications.bib&key=10.1017-S0962492910000048",
+        "https://na.math.kit.edu/download/papers/acta-final.pdf"
+      ],
+      "verified_content": "Original78-page paper discusses construction, analysis, implementation and applications of exponential integrators, including matrix functions applied to vectors and spatially discretized problems.",
+      "insertion": "I3",
+      "scholarly": true,
+      "verified": true,
+      "locations": {
+        "bibliography": "paper/references.bib",
+        "manuscript": "paper/main.tex",
+        "main_cite_lines": [
+          147
+        ]
+      },
+      "role": "published scholarly article"
+    }
+  ]
+}

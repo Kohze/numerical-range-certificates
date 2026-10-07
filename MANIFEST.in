@@ -1,0 +1,17 @@
+include LICENSE README.md CONTRIBUTING.md PUBLICATION.md CITATION.md CITATION.cff CHANGELOG.md
+recursive-include examples *.json
+recursive-include experiments *.py
+recursive-include tests *.py
+recursive-include reproduce *.py *.md
+recursive-include results *.csv *.json
+recursive-include paper *.tex *.bib *.pdf LICENSE *.md
+include audit/citation-verification.json audit/citation-verification.txt audit/installed-package-verification.json
+prune output
+prune dist
+prune build
+prune .git
+prune .venv
+prune metadata
+prune publication
+prune tmp
+global-exclude __pycache__ *.py[cod] .DS_Store

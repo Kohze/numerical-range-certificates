@@ -1,0 +1,23 @@
+{
+  "rows": 144,
+  "all_exact_budget_inequalities_passed": true,
+  "matrix": [
+    [
+      -1,
+      1
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "numerical_range": "x^2/(5/4)+y^2/(1/4)<=1",
+  "known_scalar_supremum": "5/4 for both polynomials",
+  "exact_matrix_norms": {
+    "z_squared": "1",
+    "one_minus_z_squared": "0"
+  },
+  "analytic_support_producer_shipped": false,
+  "independent_implementation": false,
+  "study_scope": "finite scalar diagnostic; not a performance or universal theorem proof"
+}

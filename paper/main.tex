@@ -1,0 +1,1219 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype,booktabs,array}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{xurl}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\setlength{\emergencystretch}{2em}
+\newcommand{\C}{\mathbb C}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\W}{W}
+\newcommand{\cbase}{1+\sqrt{2}}
+\newcommand{\HH}{\mathcal H}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\re}{\operatorname{Re}}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\spec}{spec}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+\title{Finite numerical-range certificates for polynomial matrix computations:\\
+a rational prototype with comparative controls}
+\author{Robin Gounder\thanks{Correspondence: \href{mailto:robin@gounder.com}{robin@gounder.com}.}\\{\small Vaionex Corporation}}
+\date{Research draft, 7 October 2026}
+\hypersetup{pdftitle={Finite numerical-range certificates for polynomial matrix computations: a rational prototype with comparative controls},
+pdfauthor={Robin Gounder}}
+\begin{document}
+\maketitle
+\begin{abstract}
+A numerical-range inequality becomes a usable error certificate only after
+its continuous supremum and its numerical inputs have been bounded.
+We present a finite certificate for matrix-valued polynomials based on
+validated supporting half-planes, a boundary mesh, and coefficient norm
+bounds. The certificate is valid with the established complete spectral-set
+constant \(1+\sqrt{2}\); a separate hypothesis records the sharp constant
+\(2\) asserted in recent preprints and in the OpenAI mathematics release.
+We prove an explicit enclosure error estimate, distinguish eigenvalue
+validation from eigenpair residuals, and separate input uncertainty from
+evaluation roundoff. For Richardson residual powers, the classical numerical-radius power
+inequality already supplies an unconditional constant-two bound. The
+supremum over a polygon reduces exactly to its vertices, and a rational
+certificate can be checked without trigonometric functions or
+floating-point logarithms.
+Comparative controls show that enclosure geometry can lower a sufficient
+budget relative to a single-step induced-norm rate bound, while stronger
+exact-power certificates beat the prototype on its featured fixture.
+On the coupled \(32\times32\) fixture at tolerance \(10^{-8}\), the
+numerical-range certificate gives 31 steps, compared with 11 for direct
+powers and 113 for the single-step norm-rate bound. The prototype supports
+real-rational scalar polynomials; the theorem permits matrix-valued
+polynomials. The experiments compare sufficient certificate budgets and
+construction costs. The contribution is a finite certificate specification,
+an explicit error decomposition, and reproducible diagnostics built from
+established spectral-set and numerical-range methods.
+\end{abstract}
+\noindent\textbf{Keywords:} numerical range; verified computation;
+matrix polynomial; spectral set; Richardson iteration; GMRES.\\
+\textbf{MSC 2020:} 15A60, 65F10, 65G20, 47A25.
+
+\section{Introduction and scope}\label{sec:intro}
+Polynomial computations occur in iterative linear solvers, matrix-function
+approximations, and stability analysis. For nonnormal matrices, evaluating
+a polynomial only at the eigenvalues can underestimate its operator norm.
+The numerical range retains directional information that can control this
+norm. A theorem of Crouzeix and Palencia gives, uniformly in the matrix and
+coefficient dimensions,
+\begin{equation}\label{eq:CPintro}
+ \norm{Q[A]}\le(\cbase)\max_{z\in\W(A)}\norm{Q(z)}
+\end{equation}
+for matrix-valued polynomials \citep{CrouzeixPalencia2017}.
+This complete bound permits coefficient matrices that do not commute.
+For an application, however, the right-hand side still contains a
+continuous set and a continuous maximization problem. An inaccurate outer
+enclosure or an uncertified eigenvalue can defeat the intended guarantee.
+
+The numerical-range functional calculus builds on earlier operator
+integral representations \citep{DelyonDelyon1999}, convex-domain
+spectral-set estimates \citep{BadeaCrouzeixDelyon2006}, and uniform
+numerical-range bounds for polynomial functions
+\citep{Crouzeix2007}. Our finite arithmetic interface applies these
+established spectral-set estimates to finite, reproducible norm certificates.
+
+The numerical determination of the field of values has a substantial
+history. Johnson developed its approximation using directional Hermitian
+eigenproblems \citep{Johnson1978}. Loisel and Maxwell developed a
+path-following algorithm, with error bounds for specified matrix classes
+and numerical cost--accuracy comparisons \citep{LoiselMaxwell2018}.
+Field-of-values computation is also available in existing scientific
+software, for example the Chebfun exposition and implementation
+\citep{Trefethen2010}. These methods supply the supporting-line geometry
+used in the present certificate.
+
+Numerical-range estimates already support matrix-function algorithms.
+Beckermann and Reichel connect Faber approximation and matrix-function
+error estimates \citep{BeckermannReichel2009}. Crouzeix and Greenbaum give
+spectral-set estimates with applications to GMRES and rational Krylov
+methods \citep{CrouzeixGreenbaum2019}. Our exact-arithmetic GMRES
+corollary connects the finite certificate with the standard
+residual-minimization property of the method \citep{SaadSchultz1986}.
+
+The polynomial-approximation viewpoint also underlies geometric
+analyses of Krylov methods \citep{EiermannErnst2001}.
+Beckermann obtained numerical-range GMRES estimates through Faber
+polynomials \citep{Beckermann2005}. Eigenvalues alone cannot prescribe
+a nonnormal GMRES convergence history: Greenbaum, Pt{\'a}k and
+Strako{\v s} constructed any prescribed nonincreasing positive residual
+curve with any chosen nonzero spectrum
+\citep{GreenbaumPtakStrakos1996}.
+
+
+The sharp constant is also the subject of literature preceding the
+repository studied here. Lorist and Schwenninger assert a general scalar
+constant-two proof in a 2026 preprint \citep{LoristSchwenninger2026}.
+Crouzeix and Greenbaum subsequently use that result to update
+spectral-set estimates \citep{CrouzeixGreenbaum2026Update}. Complete
+constant-two results have been reported for weighted shifts
+\citep{CrouzeixGreenbaum2025} and for matrices of order at most three
+\citep{AhagCzyzVirtanen2026}. The OpenAI release asserts the complete
+inequality in arbitrary finite dimensions
+\citep{OAI:A-direct-proof-of-the-complete-Crouzeix-inequality-September-26-2026}.
+Scalar constant-two applications therefore have a literature basis
+preceding the repository release.
+
+This paper addresses a narrower operational question: what finite evidence
+suffices to turn a numerical-range bound into a reproducible norm
+certificate? Its contributions are an explicit finite-input theorem, an
+error decomposition that can be audited separately, and an exact rational
+realization for scalar residual polynomials. The geometric ingredients and
+the spectral-set applications are established methods. The controls below
+test recomputability and quantify conservatism through comparisons with
+competing certificates, including norms of matrix powers.
+
+Matrix-function theory and conditioning are treated systematically by
+Higham \citep{Higham2008}. Exponential integrators provide a concrete
+setting in which matrix functions applied to vectors are required
+\citep{HochbruckOstermann2010}; truncated Taylor matrix polynomials
+are used in the exponential-action algorithm of Al-Mohy and Higham
+\citep{AlMohyHigham2011}. These existing applications motivate future
+certificate work. The present prototype implements scalar polynomial and
+Richardson certificates; exponential-action algorithms provide a further
+application setting.
+
+\paragraph{Evidence status.}
+We fix the repository snapshot at commit
+\nolinkurl{adc7f1241b42e322a6451854ab7e4b4c146bf78a}, dated
+6 October 2026, and record the source audit as of 7 October 2026
+\citep{OpenAIRepository2026}. Its scope document describes a sharp complete
+constant-two result and links several Lean comparator statements
+\citep{OpenAIScope325}. The source assessment uses the supplied scope
+document, comparator configuration, and manuscript at this snapshot.
+This evidence describes the reported theorem scope and its comparison
+statements. For arbitrary polynomials, unconditional conclusions below use
+\(\cbase\), and the general constant-two version is stated under an
+explicit hypothesis. Fixed Richardson powers instead use the classical
+unconditional numerical-radius power inequality, as explained in
+Section~\ref{sec:residuals}. This distinction separates the theorem
+assumptions from the finite certificate arithmetic.
+
+\section{Notation and the theorem interface}\label{sec:notation}
+Let \(A\in\C^{n\times n}\), where \(n\ge1\).
+All unsubscripted vector and operator norms are Euclidean norms;
+the subscripts \(1\) and \(\infty\) denote the usual induced norms.
+Write
+\[
+ \W(A)=\{x^*Ax:x\in\C^n,\ \norm{x}=1\}.
+\]
+In finite dimensions the numerical range is nonempty, compact, and convex.
+For \(c\in\C\), let \(T=A-cI_n\), and write
+\[
+ Q(z)=\sum_{k=0}^{d} B_k(z-c)^k,\qquad
+ B_k\in\C^{s\times s},\quad s\ge1.
+\]
+Its operator evaluation is
+\begin{equation}\label{eq:evaluation}
+ Q[A]=\sum_{k=0}^{d} T^k\otimes B_k.
+\end{equation}
+The matrix space is the first tensor factor; interchanging the factors is
+unitarily equivalent but should not be done silently in software.
+Coefficient products are not assumed to commute.
+
+\begin{definition}[Admissible constant]\label{def:constant}
+A constant \(C\) is admissible for the computations considered here if
+\[
+ \norm{Q[A]}\le C\max_{z\in\W(A)}\norm{Q(z)}
+\]
+holds for every stated matrix and coefficient size and polynomial.
+The established universal complete choice is \(C=\cbase\)
+\citep{CrouzeixPalencia2017}. The hypothesis \(\HH_2\) is that the same
+complete statement holds universally with \(C=2\).
+\end{definition}
+
+We use \(\HH_2\) only to label conclusions that require it. For scalar
+coefficients, the scalar constant-two statement suffices; the complete
+hypothesis is stronger than necessary. Conversely, a scalar theorem alone
+does not justify an arbitrary matrix-coefficient certificate.
+For a normal \(A\), the spectral theorem supplies \(C=1\) directly:
+\[
+ \norm{Q[A]}=\max_{\lambda\in\spec(A)}\norm{Q(\lambda)}
+ \le \max_{z\in\W(A)}\norm{Q(z)}.
+\]
+A producer should use such a justified stronger bound when it recognizes
+the required structure.
+
+A \emph{validated} quantity in this paper is a proved upper bound for the
+specified exact mathematical input. It may be obtained by rational
+arithmetic, outward interval arithmetic, or another justified method.
+A decimal approximation, an unrecorded numerical tolerance, and a plot are
+not certificates. The distinction follows the general philosophy of
+verification methods surveyed by Rump \citep{Rump2010}.
+
+\section{Finite outer enclosures}\label{sec:enclosures}
+\subsection{Directional support and validated producers}
+For \(\theta\in\mathbb R\), set
+\[
+ H_\theta(T)=\frac{e^{-i\theta}T+e^{i\theta}T^*}{2},\qquad
+ h(\theta)=\lambda_{\max}(H_\theta(T)).
+\]
+For every unit vector \(x\),
+\[
+ \re(e^{-i\theta}x^*Tx)=x^*H_\theta(T)x.
+\]
+The Rayleigh--Ritz principle identifies \(h(\theta)\) with the support
+function of \(\W(T)\).
+
+Choose directions \(\theta_1,\ldots,\theta_J\) in cyclic order modulo
+\(2\pi\), and validated numbers \(\bar h_j\ge h(\theta_j)\). Define
+\begin{equation}\label{eq:polygon}
+ P=c+\bigcap_{j=1}^{J}
+ \{w\in\C:\re(e^{-i\theta_j}w)\le\bar h_j\}.
+\end{equation}
+This is an outer enclosure. To use its vertices or boundary, its
+nonemptiness and boundedness must also be established.
+
+For exact rational geometry, unit normals are unnecessary. Put
+\[
+ S=\frac{T+T^*}{2},\qquad J_T=\frac{T-T^*}{2i}.
+\]
+Given a nonzero real normal \(q=(a,b)\), the relevant Hermitian matrix is
+\(H_q=aS+bJ_T\), and
+\[
+ \sup_{z\in\W(T)}\bigl(a\re z+b\im z\bigr)=\lambda_{\max}(H_q).
+\]
+A validated upper bound \(g_q\) gives the half-plane
+\(a\re(z-c)+b\im(z-c)\le g_q\).
+With rational \(a,b,g_q,c\), intersections and feasibility checks can be
+performed exactly. There is no need to treat rounded sine and cosine values
+as exact unit normals.
+
+An elementary valid producer uses the Gershgorin row bound
+\begin{equation}\label{eq:gersh}
+ g_q=\max_i\left((H_q)_{ii}+\sum_{\ell\ne i} u_{i\ell}\right),
+ \qquad u_{i\ell}\ge |(H_q)_{i\ell}|.
+\end{equation}
+Indeed, for an eigenpair choose a component of maximal modulus. Its
+eigenvalue equation gives
+\(\lambda\le(H_q)_{ii}+\sum_{\ell\ne i}|(H_q)_{i\ell}|\),
+because the eigenvalue is real. This proves the required upper bound.
+The producer may be conservative; validity does not imply accuracy.
+
+\begin{remark}[Eigenpair residuals do not certify the upper edge]
+For \(H=\diag(0,100)\), the unit vector \(v=(1,0)^T\) has Rayleigh
+quotient \(0\) and eigenpair residual \(0\), while
+\(\lambda_{\max}(H)=100\). A single small Ritz residual cannot justify an
+upper support line. It can assist in a lower bound, or be combined with
+additional certified spectral information. Other valid upper producers
+include a verified positive-semidefinite test for \(gI-H\) and a validated
+full decomposition with controlled orthogonality and remainder.
+For a strict upper support, one can instead verify positive definiteness
+of \(gI-H_q\). Rump develops rigorous Cholesky-based sufficient tests for
+Hermitian positive definiteness with rounding errors included
+\citep{Rump2006}. Such a validator is a possible alternative support
+producer; it is not supplied by the present implementation.
+
+\end{remark}
+
+\subsection{An explicit enclosure error}
+A convergence statement requires more than upper supports. In particular,
+refining the directions of a Gershgorin construction need not remove its
+spectral slack.
+
+\begin{proposition}[Radius and enclosure excess]\label{prop:geometry}
+Assume \(\W(T)\subseteq\{z:|z|\le R\}\), where \(R\ge0\), and let
+the maximum cyclic gap between the unit-normal directions be
+\(\Delta<\pi\). Suppose, for some \(\eta\ge0\),
+\[
+ h(\theta_j)\le\bar h_j\le h(\theta_j)+\eta
+ \quad\text{for every }j.
+\]
+Then \(P\) in \eqref{eq:polygon} is a nonempty compact convex outer
+enclosure, every \(z\in P\) satisfies
+\[
+ |z-c|\le\rho,\qquad
+ \rho=(R+\eta)\sec(\Delta/2),
+\]
+and its one-sided Hausdorff excess satisfies
+\begin{equation}\label{eq:hausdorff}
+ \sup_{z\in P}\dist(z,\W(A))
+ \le d_P:=\eta+2(R+\rho)\sin(\Delta/4).
+\end{equation}
+\end{proposition}
+\begin{proof}
+The support identity implies \(\W(A)\subseteq P\), proving nonemptiness.
+For any nonzero \(w=z-c\) in the intersection, select a sampled normal
+within angular distance \(\Delta/2\) of \(w/|w|\). Then
+\[
+ |w|\cos(\Delta/2)\le
+ \re(e^{-i\theta_j}w)\le\bar h_j\le R+\eta.
+\]
+This establishes boundedness and the radius estimate. The intersection
+is closed and convex, hence compact.
+
+Work in shifted coordinates and write \(K=\W(T)\). For \(w\in P-c\)
+outside \(K\), let \(y\) be its Euclidean projection onto \(K\).
+The unit vector \(u=(w-y)/|w-y|\), identified with a complex unit normal,
+supports \(K\) at \(y\). Hence
+\(\dist(w,K)=u\cdot w-h_K(u)\).
+Choose a sampled unit normal \(u_j\) within angle \(\Delta/2\) of \(u\).
+The support function is \(R\)-Lipschitz as a function of the unit normal:
+\[
+ |h_K(u)-h_K(u_j)|\le R|u-u_j|.
+\]
+The sampled inequality and \(|w|\le\rho\) give
+\[
+ u\cdot w-h_K(u)
+ \le \eta+(R+\rho)|u-u_j|
+ \le \eta+2(R+\rho)\sin(\Delta/4).
+\]
+Points in \(K\) have distance zero, so the same bound holds throughout.
+\end{proof}
+
+The estimate gives an explicit upper budget in terms of support slack
+and angular resolution.
+Any validated disk bound may serve as \(R\); for instance,
+\(R\ge\norm{T}\) is sufficient.
+A useful bound on \(\eta\) can be obtained from a certified lower support
+value \(\underline h_j\): take
+\(\eta=\max_j(\bar h_j-\underline h_j)\).
+An exact Rayleigh quotient supplies such a lower value.
+The difference must include Gershgorin overestimation as well as arithmetic
+rounding. Merely setting \(\eta\) equal to an eigensolver tolerance is
+unjustified.
+
+If input uncertainty satisfies \(\norm{T-\widehat T}\le\varepsilon_A\),
+a support bound for \(\widehat T\) can be safely enlarged by
+\(|q|\varepsilon_A\), since
+\(\norm{H_q(T)-H_q(\widehat T)}\le|q|\varepsilon_A\).
+This certifies an enclosure of the uncertain input itself. The alternative
+nominal-input transfer in Section~\ref{sec:errors} should not be combined
+with this enlargement in a way that double-counts the same error.
+
+\section{The finite polynomial certificate}\label{sec:certificate}
+Let \(P\) be a nonempty compact convex polygon containing \(\W(A)\).
+For a polygon with nonempty interior, let \(Z=\{z_1,\ldots,z_L\}\)
+be a finite subset of its boundary such that every boundary point is
+within distance \(\delta\) of \(Z\).
+If \(P\) is a segment or point, require instead that every point of \(P\)
+be within distance \(\delta\) of \(Z\).
+This convention avoids invoking a two-dimensional maximum principle on a
+degenerate domain.
+
+Choose validated quantities
+\[
+ \rho\ge\max_{z\in P}|z-c|,\quad
+ \beta_k\ge\norm{B_k},\quad
+ u_\ell\ge\norm{Q(z_\ell)},
+\]
+and put
+\begin{equation}\label{eq:DandU}
+ D_Q=\sum_{k=1}^{d} k\beta_k\rho^{k-1},
+ \qquad U_Q=\max_{\ell}u_\ell+\delta D_Q.
+\end{equation}
+The empty derivative sum is zero. Zeroth powers are interpreted as one,
+including when \(\rho=0\).
+
+\begin{theorem}[Finite-input certificate]\label{thm:finite}
+Under the stated validated-input conditions,
+\[
+ \max_{z\in P}\norm{Q(z)}\le U_Q.
+\]
+Consequently,
+\begin{equation}\label{eq:certificate}
+ \norm{Q[A]}\le C U_Q
+\end{equation}
+for every admissible constant \(C\).
+The certificate is unconditional for \(C=\cbase\), and its \(C=2\)
+version follows under \(\HH_2\).
+A rational upper bound \(C_{\rm up}\ge C\) may replace \(C\)
+in a numerical certificate.
+\end{theorem}
+\begin{proof}
+On the disk \(|z-c|\le\rho\),
+\(\norm{Q'(z)}\le D_Q\).
+Integrating along a straight line segment in that convex disk shows that
+\(\norm{Q(z)-Q(w)}\le D_Q|z-w|\).
+The mesh therefore bounds each covered point by \(U_Q\).
+
+When \(P\) has interior, for any fixed unit vectors \(a,b\in\C^s\),
+the scalar polynomial \(a^*Q(z)b\) satisfies the maximum-modulus
+principle on \(P\).
+For any \(z\in P\),
+\[
+ |a^*Q(z)b|\le\max_{w\in\partial P}\norm{Q(w)}.
+\]
+Taking the supremum over \(a,b\) bounds \(\norm{Q(z)}\) by the boundary
+supremum, which the mesh estimate bounds by \(U_Q\).
+For a degenerate \(P\), the mesh already covers the entire domain.
+Finally, \(\W(A)\subseteq P\) and the admissible spectral-set inequality
+give \eqref{eq:certificate}.
+\end{proof}
+
+\begin{proposition}[Auditable overestimation budget]\label{prop:excess}
+Suppose Proposition~\ref{prop:geometry} applies and the sample bounds
+also satisfy
+\(u_\ell\le\norm{Q(z_\ell)}+\eta_{\rm sample}\), with a known
+\(\eta_{\rm sample}\ge0\).
+If \(M_Q=\max_{z\in\W(A)}\norm{Q(z)}\), then
+\begin{equation}\label{eq:budget}
+ U_Q\le M_Q+D_Q(d_P+\delta)+\eta_{\rm sample}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+For each sample point choose a closest point in the compact set
+\(\W(A)\).
+Both points lie in the radius-\(\rho\) disk.
+The Lipschitz estimate gives
+\(\norm{Q(z_\ell)}\le M_Q+D_Qd_P\).
+Adding the sample slack and mesh term proves the claim.
+\end{proof}
+
+Theorem~\ref{thm:finite} needs only the upper bounds.
+The two-sided accuracy assumptions in Proposition~\ref{prop:excess}
+quantify conservatism; they are not needed to establish validity.
+Coefficient norm bounds may use a validated Frobenius norm or
+\(\sqrt{\norm{B_k}_1\norm{B_k}_\infty}\).
+These inexpensive choices can introduce substantial slack for
+matrix-valued coefficients.
+
+\paragraph{Finite construction.}
+A checker can recompute the supporting inequalities, enumerate the polygon
+vertices, bound the enclosing radius, and subdivide each edge.
+If an edge of length \(\ell\) is split into \(m\) equal subsegments
+and both endpoints are sampled, every point of that edge is within
+\(\ell/(2m)\) of a sample.
+A validated upper bound on \(\ell\) gives a valid mesh radius.
+The point evaluations, coefficient bounds, and all final arithmetic must
+be validated.
+A producer that checks only the sampled function values has not bounded
+the values between samples.
+
+\section{Input uncertainty and evaluation roundoff}\label{sec:errors}
+A geometric certificate bounds an exact operator.
+If the input is uncertain or an implementation evaluates a nearby
+polynomial, those errors require their own evidence.
+
+\begin{proposition}[Nominal-input transfer]\label{prop:perturbation}
+Let
+\(Q(z)=\sum_{k=0}^d B_k(z-c)^k\) and
+\(\widehat Q(z)=\sum_{k=0}^d\widehat B_k(z-c)^k\).
+Suppose
+\[
+ \norm{A-\widehat A}\le\varepsilon_A,\qquad
+ \norm{B_k-\widehat B_k}\le\varepsilon_k,\qquad
+ \norm{B_k}\le\beta_k,
+\]
+and
+\(\max\{\norm{A-cI},\norm{\widehat A-cI}\}\le M\).
+Then
+\begin{equation}\label{eq:perturbation}
+ \norm{Q[A]-\widehat Q[\widehat A]}
+ \le E_{\rm input}
+ :=\varepsilon_A\sum_{k=1}^d k\beta_k M^{k-1}
+   +\sum_{k=0}^d\varepsilon_k M^k.
+\end{equation}
+If a finite certificate bounds
+\(\norm{\widehat Q[\widehat A]}\le C\widehat U\), it follows that
+\(\norm{Q[A]}\le C\widehat U+E_{\rm input}\).
+\end{proposition}
+\begin{proof}
+Write \(T=A-cI\) and \(\widehat T=\widehat A-cI\).
+The telescoping identity
+\[
+ T^k-\widehat T^k
+ =\sum_{j=0}^{k-1}T^{k-1-j}(T-\widehat T)\widehat T^j
+\]
+holds without commutativity and gives
+\(\norm{T^k-\widehat T^k}\le kM^{k-1}\varepsilon_A\).
+Split each term of the difference as
+\[
+ T^k\otimes B_k-\widehat T^k\otimes\widehat B_k
+ =(T^k-\widehat T^k)\otimes B_k
+   +\widehat T^k\otimes(B_k-\widehat B_k).
+\]
+Use the product rule for the spectral norm of a Kronecker product and
+the triangle inequality.
+\end{proof}
+
+If an implementation produces \(Y\) with a validated bound
+\(\norm{Y-\widehat Q[\widehat A]}\le E_{\rm alg}\), then
+\[
+ \norm{Y}\le C\widehat U+E_{\rm alg},\qquad
+ \norm{Y-Q[A]}\le E_{\rm alg}+E_{\rm input}.
+\]
+These statements distinguish the computed output norm from its distance to
+the intended operator.
+The value \(E_{\rm alg}\) requires validation for the evaluation algorithm.
+The implementation below supplies exact-rational geometry; floating-point
+Horner and Krylov evaluation require their corresponding roundoff analyses.
+This separation is consistent with the forward/backward error and
+conditioning distinctions in Higham \citep[Chapters~1--3 and~5]{Higham2002}.
+An exact polynomial norm certificate therefore does not by itself
+provide a floating-point evaluation-error bound.
+
+
+A similar separation applies to matrix-function approximation.
+If \(f\) is holomorphic on a neighborhood of \(P\) and
+\(\max_{z\in P}|f(z)-p(z)|\le\varepsilon_{\rm approx}\), the established
+functional-calculus bound gives
+\[
+ \norm{f(A)-p(A)}\le(\cbase)\varepsilon_{\rm approx}.
+\]
+For a computed approximation \(Y\), a validated evaluation error
+\(\norm{Y-p(A)}\le E_{\rm alg}\) gives total error
+\((\cbase)\varepsilon_{\rm approx}+E_{\rm alg}\).
+This extends the theorem interface to matrix-function approximation.
+The scalar reference implementation supplies polynomial mesh bounds;
+approximation and evaluation-error bounds remain separate validated inputs.
+
+\section{Residual polynomials and practical decisions}\label{sec:residuals}
+\subsection{A vertex certificate for Richardson iteration}
+For \(Ax=b\), fixed-step Richardson iteration with parameter
+\(\alpha\in\C\) has exact residual
+\[
+ r_m=(I-\alpha A)^m r_0.
+\]
+Let the enclosing polygon \(P\) have vertex set \(V\), including endpoints
+when \(P\) is a segment and its single point when it is a point.
+
+\begin{lemma}[Vertex reduction]\label{lem:vertices}
+Let
+\(q_P=\max_{v\in V}|1-\alpha v|\).
+For every integer \(m\ge1\),
+\[
+ \max_{z\in P}|(1-\alpha z)^m|=q_P^m.
+\]
+\end{lemma}
+\begin{proof}
+Every point of \(P=\conv(V)\) is a convex combination
+\(z=\sum_v t_vv\), with \(t_v\ge0\) and \(\sum_vt_v=1\).
+The triangle inequality gives
+\[
+ |1-\alpha z|
+ =\left|\sum_vt_v(1-\alpha v)\right|
+ \le\sum_vt_v|1-\alpha v|\le q_P.
+\]
+The bound is attained at a maximizing vertex.
+Raising to the positive integer power \(m\) proves the result.
+\end{proof}
+
+Define the numerical radius by \(w(B)=\max_{z\in\W(B)}|z|\),
+using complex unit vectors even when \(B\) is real.
+The classical numerical-radius power inequality gives
+\(w(B^m)\le w(B)^m\); together with \(\norm{B}\le2w(B)\), this yields
+\(\norm{B^m}\le2w(B)^m\) \citep[Section~3.2]{Tadmor2025};
+see also \citet[Eq.~(1.1)]{LewisOverton2020}.
+These established facts give a sharper unconditional bound for this
+particular polynomial family than the general Crouzeix--Palencia constant.
+
+\begin{proposition}[Classical power certificate]\label{prop:power}
+For \(E=I-\alpha A\) and every integer \(m\ge1\),
+\[
+ \norm{E^m}\le2w(E)^m\le2q_P^m.
+\]
+No constant-two Crouzeix hypothesis is needed.
+\end{proposition}
+\begin{proof}
+The affine numerical-range identity gives
+\(\W(E)=1-\alpha\W(A)\), so \(w(E)\le q_P\).
+Apply the power inequality and \(\norm{E^m}\le2w(E^m)\).
+\end{proof}
+
+\begin{corollary}[Residual budget]\label{cor:richardson}
+For every \(m\ge1\), the unconditional choice \(C=2\) gives the
+following bound. The general spectral-set choice \(C=\cbase\) remains
+a valid, weaker comparator:
+\[
+ \norm{r_m}\le Cq_P^m\norm{r_0}.
+\]
+If \(0<q_P<1\) and \(0<\tau<1\), a sufficient exact-arithmetic
+iteration budget for
+\(\norm{r_m}/\norm{r_0}\le\tau\), with \(r_0\ne0\), is
+\begin{equation}\label{eq:iterations}
+ m_C=\left\lceil
+ \frac{\log(\tau/C)}{\log q_P}
+ \right\rceil.
+\end{equation}
+If \(q_P=0\), one step suffices.
+If \(q_P\ge1\), this certificate does not guarantee eventual contraction.
+\end{corollary}
+The constant two here follows from Proposition~\ref{prop:power}, even if
+the general hypothesis \(\HH_2\) is unresolved. This distinction is
+essential: the Richardson certificate follows from the classical power
+inequality. Geometric contractivity is a sufficient certificate condition;
+the iteration can converge even when that condition fails.
+
+For real rational \(\alpha\) and rational polygon vertices,
+\[
+ q_P^2=\max_{v=x+iy\in V}
+ \bigl((1-\alpha x)^2+\alpha^2y^2\bigr)
+\]
+is rational.
+A checker can avoid logarithms and square roots in the stopping decision by
+testing
+\begin{equation}\label{eq:rationalstop}
+ C_{\rm up}^2(q_P^2)^m\le\tau^2.
+\end{equation}
+Testing successive positive integers until this inequality holds gives the
+smallest budget certified by the chosen rational constant upper bound.
+A configured search cap is a software resource limit, not evidence that
+no certificate exists.
+
+\subsection{GMRES and inexact recurrence}
+In exact arithmetic, the \(m\)-step GMRES residual minimizes
+\(\norm{p(A)r_0}\) over polynomials of degree at most \(m\) with \(p(0)=1\)
+\citep{SaadSchultz1986}.
+The Richardson polynomial is an admissible comparator. With \(C=2\)
+unconditionally by Proposition~\ref{prop:power},
+\[
+ \norm{r_m^{\rm GMRES}}\le Cq_P^m\norm{r_0}.
+\]
+This bounds the mathematical minimal residual in exact arithmetic.
+Polynomial selection and finite-precision execution require the
+corresponding GMRES algorithm analysis.
+
+For a perturbed residual recurrence,
+\[
+ \widetilde r_{j+1}=(I-\alpha A)\widetilde r_j+\xi_j,\qquad
+ \norm{\xi_j}\le\varepsilon_j,
+\]
+take \(C=2\) unconditionally, define \(\kappa_0=1\) and
+\(\kappa_k=Cq_P^k\) for \(k\ge1\).
+Unrolling the recurrence proves
+\begin{equation}\label{eq:roundoffrecurrence}
+ \norm{\widetilde r_m}
+ \le Cq_P^m\norm{\widetilde r_0}
+    +\sum_{j=0}^{m-1}\kappa_{m-1-j}\varepsilon_j,
+ \qquad m\ge1.
+\end{equation}
+No independence or cancellation of the perturbations is assumed.
+If \(q_P<1\) and every \(\varepsilon_j\le\varepsilon\), this gives
+\[
+ \norm{\widetilde r_m}
+ \le Cq_P^m\norm{\widetilde r_0}
+ +\varepsilon\left(
+ 1+Cq_P\frac{1-q_P^{m-1}}{1-q_P}\right).
+\]
+The quantity \(\varepsilon(1+Cq_P/(1-q_P))\) is a conservative
+asymptotic upper bound for the perturbation contribution. It is not a
+lower bound on attainable residuals: the permitted perturbations may
+all be zero.
+Deriving the actual \(\varepsilon_j\), and relating recursive residuals
+to explicitly recomputed residuals, remain necessary tasks for a
+floating-point solver.
+Inexact Krylov methods have their own analysis of controlled
+matrix-vector inaccuracies \citep{SimonciniSzyld2003}.
+That theory provides algorithm-specific perturbation budgets that can
+be used with the present recurrence estimate.
+
+
+\subsection{When the constant can matter}
+For the same validated \(U_Q\), replacing \(\cbase\) by \(2\) reduces
+the multiplicative bound by
+\[
+ 1-\frac{2}{1+\sqrt2}=3-2\sqrt2\approx0.1716.
+\]
+For Richardson powers this replacement is already justified
+unconditionally by Proposition~\ref{prop:power}; for a general
+polynomial, a constant-two spectral-set conclusion still has its
+separate theorem obligation. It does not change the exponential rate
+\(q_P\).
+For \(0<q_P<1\), the budgets in \eqref{eq:iterations} obey
+\[
+ 0\le m_{\cbase}-m_2
+ \le\left\lceil
+ \frac{\log((1+\sqrt2)/2)}{-\log q_P}\right\rceil.
+\]
+The difference may be zero.
+These budgets refer to exact constants and exact \(q_P\);
+outward numerical bounds can add slack.
+
+The enclosure budget is often more significant.
+If \(M_Q>0\) and \(U_Q=M_Q(1+e)\), then the constant-two bound beats
+the ideal established bound \((\cbase)M_Q\) exactly when
+\[
+ e<\frac{\sqrt2-1}{2}\approx0.2071.
+\]
+This comparison is a diagnostic against an ideal reference, not an
+observable acceptance test unless \(M_Q\) is also known.
+It explains why a large enclosure excess can erase the advantage of a
+sharper constant.
+An additive algorithm error can further dominate both bounds.
+
+The alternative induced-norm certificate should always be reported.
+For \(E=I-\alpha A\),
+\[
+ \norm{E^m}\le
+ \min\left\{\norm{E}^{m},
+ \bigl(\norm{E}_1\norm{E}_\infty\bigr)^{m/2}\right\}.
+\]
+A validated upper bound on either rate gives a competing budget.
+Whenever both it and \(Cq_P^m\) are available, their minimum is a valid
+and at least as informative certificate.
+The single-step rate is only a basic baseline. It can lose substantial
+information that remains in \(E^m\), so beating this baseline is
+insufficient evidence of superiority.
+Scalable norm estimation also requires care in a validated comparison:
+the block one-norm estimator of Higham and Tisseur returns a lower bound,
+not an outward upper certificate
+\citep[Section~5]{HighamTisseur2000}.
+A diagnostic estimate must acquire separate upper-bound validation
+before it can replace \(c_j\) in the certificate below.
+
+
+\begin{proposition}[Standard matrix-power comparison]\label{prop:blocknorm}
+Let \(k\ge1\), let \(c_0=1\), and suppose that
+\(c_j\ge\norm{E^j}^2\) for \(1\le j\le k\).
+For integers \(m=qk+r\), with \(q\ge0\) and \(0\le r<k\),
+\[
+ \norm{E^m}^2\le c_k^q c_r.
+\]
+In particular, an exactly computed real rational matrix power gives the
+validated choice
+\(c_j=\norm{E^j}_1\norm{E^j}_\infty\).
+\end{proposition}
+\begin{proof}
+The identity \(E^{qk+r}=(E^k)^q E^r\) and submultiplicativity give
+\(\norm{E^{qk+r}}\le\norm{E^k}^{q}\norm{E^r}\).
+Square this inequality and substitute the stated upper bounds.
+The induced-norm product bounds the squared Euclidean operator norm.
+\end{proof}
+
+This standard comparison supplies the matrix-power baseline.
+For an exact rational power, the target test \(c_m\le\tau^2\)
+requires no spectral-set constant or square root.
+Scanning successive powers can yield a stronger sufficient budget than
+both a single-step rate and a numerical-range enclosure.
+Direct powers and block-power reuse have their own arithmetic costs,
+including fraction growth. A performance comparison must account for
+those costs rather than rank methods by iteration budgets alone.
+A practical comparison therefore reports bound strength, construction
+costs, and reuse of computed powers.
+
+\section{Reference realization and analytic controls}\label{sec:controls}
+\subsection{A rational producer and a recomputation contract}
+For a real rational matrix \(A\), write
+\(S=(A+A^T)/2\) and \(K=(A-A^T)/2\).
+The support matrix for \(q=(a,b)\) is
+\[
+ H_q=aS-ibK.
+\]
+Its diagonal entries are \(aA_{ii}\), and an off-diagonal modulus is
+\(\sqrt{a^2S_{i\ell}^2+b^2K_{i\ell}^2}\).
+A rational upper square root gives a fully rational Gershgorin row witness.
+At precision \(b_{\rm sq}\), an integer square-root routine can find the
+smallest integer \(t\ge0\) for which
+\[
+ t^2 q_{\rm den}\ge p\,2^{2b_{\rm sq}},
+\]
+where \(p/q_{\rm den}\ge0\) is the radicand.
+Then \(t/2^{b_{\rm sq}}\) is an outward upper bound, with excess less
+than \(2^{-b_{\rm sq}}\); exact dyadic roots have zero excess.
+This arithmetic statement does not bound the separate Gershgorin slack.
+
+One direction set consists of the integer points on the boundary of
+\([-k,k]^2\), \(k\ge1\), with duplicate corners removed.
+It contains \(8k\) directions and the four axes.
+Axis constraints prove boundedness.
+All pairwise nonparallel line intersections are formed rationally and tested
+against every inequality.
+Their feasible convex hull produces the bounded polygon, including segment
+and point cases.
+This elementary enumeration makes each feasible intersection auditable
+and suits the dimensions and direction counts of the prototype.
+
+A certificate should record the exact input entries and \(\alpha\), the
+normal set, all row witnesses, all support bounds, feasible vertices,
+\(q_P^2\), the theorem mode, the rational upper constant, and the stopping
+inequality.
+A checker must recompute these quantities from the input.
+It should reject inconsistencies between the declared input and its
+numerical evidence, including an inward support, a missing extremal
+vertex, an understated squared radius, or a false stopping inequality.
+The caller must compare the declared matrix with the intended input
+before relying on the result.
+Rational data should be serialized as exact numerator--denominator pairs or
+unambiguous rational strings, not rounded JSON numbers.
+
+The checker recomputes the arithmetic evidence for the stated exact input
+and theorem mode.
+The implementation supports scalar polynomials with real rational
+coefficients and Richardson polynomials with positive real rational step
+parameters, for real rational input matrices. Application use requires
+validation of the model that supplied \(A\) and of the solver evaluation.
+The general matrix-valued mesh theorem specifies an extension to complex
+inputs and matrix coefficients, with coefficient and point-norm validators
+as the required additional components.
+
+\subsection{Normal and sharp controls}
+For \(A=\diag(1,2)\) and \(\alpha=2/3\), the numerical range is
+\([1,2]\) and \(q_P=1/3\) for the exact segment enclosure.
+The true residual norm is \(3^{-m}\).
+The spectral theorem gives the stronger constant \(1\).
+A universal-\(C\) result provides a consistency check; the spectral
+bound is stronger for this matrix.
+
+For
+\[
+ J=\begin{pmatrix}0&2\\0&0\end{pmatrix},
+\]
+the numerical range is the closed unit disk and \(\norm{J}=2\).
+The scalar polynomial \(p(z)=z\) has ratio \(2\).
+This is the standard sharpness control; the low-dimensional and
+weighted-shift setting was studied before this release
+\citep{CrouzeixGreenbaum2025}.
+On \(I+J\), Richardson with \(\alpha=1\) has \(q=1\) on the true
+numerical range and no strict contraction certificate of the stated form,
+even though the residual is zero after two exact steps.
+Failure to certify contraction must not be reported as failure of the
+iteration.
+
+Let \(N_n\) be the nilpotent upper shift, with ones on the first
+superdiagonal.
+For \(A=I_n+tN_n\), \(t>0\), and \(\alpha=1\),
+\[
+ (I-A)^m=(-t)^mN_n^m,\qquad
+ \norm{(I-A)^m}=
+ \begin{cases}
+ t^m,&0\le m<n,\\
+ 0,&m\ge n.
+ \end{cases}
+\]
+For \(n\ge2\), the induced \(1\)- and infinity-norm rate is \(t\);
+for \(n=1\) it is zero. On the displayed \(n=32,t=1/5\) control,
+the Gershgorin certificate needs 13 steps versus 12 for the one-step
+norm bound. This is not a uniform ordering over the family: for
+\(n=2,t=99/100\), eight directions with 40-bit roots certify 31
+steps versus 1,833 from the one-step norm rate, while direct powers
+certify two steps. Certificate validity and a selected-baseline
+improvement are assessed together with the competing exact-power budget.
+
+\subsection{A coupled nonnormal family}\label{sec:coupled}
+For even \(n\ge4\), define the real upper-bidiagonal matrix by
+\[
+ A_{ii}=
+ \begin{cases}1,&i\text{ odd},\\11/10,&i\text{ even},\end{cases}
+ \qquad
+ A_{i,i+1}=
+ \begin{cases}-4/5,&i\text{ odd},\\-1/100,&i\text{ even},\end{cases}
+\]
+and take \(\alpha=1\).
+The nonzero weak links join the two-dimensional blocks into a coupled
+nonnormal matrix. The displayed rational entries define the analytic fixture.
+
+For \(E=I-A\), direct row and column sums give
+\[
+ \norm{E}_\infty=4/5,\qquad
+ \norm{E}_1=9/10,\qquad
+ q_{\rm induced}^2=18/25.
+\]
+For the real-axis supports of \(A\), the largest off-diagonal Gershgorin
+row radius is \(r=(4/5+1/100)/2=81/200\).
+The four axis supports alone give the valid rectangle
+\[
+ P_{\rm box}=
+ [\,1-r,\ 11/10+r\,]+i[-r,r].
+\]
+Its Richardson vertex value is exactly
+\begin{equation}\label{eq:coupled}
+ q_{\rm box}^2=(1/10+r)^2+r^2
+ =\frac{8381}{20000}<\frac{18}{25}<1.
+\end{equation}
+These statements use rational arithmetic and the proved row bound.
+They hold independently of \(\HH_2\).
+For a relative target \(\tau=10^{-8}\),
+\eqref{eq:rationalstop} with \(C_{\rm up}=17/7\) gives a sufficient box
+budget of \(45\) iterations, while the single-step induced-norm rate
+budget is \(113\).
+Here \(17/7\ge1+\sqrt2\), since \((10/7)^2>2\).
+The inequalities were checked exactly; the corresponding \(44\)- and
+\(112\)-step tests fail.
+These are conservative sufficient budgets for the exact residual bound.
+
+For \(n=32\), \(k=1\), and \(b_{\rm sq}=40\), the eight-direction
+prototype gives
+\begin{equation}\label{eq:exactq}
+ q_P^2=
+ \frac{1069775589843180464514493}
+      {3777893186295716170956800}
+ \approx0.283167240864243.
+\end{equation}
+Thus \(q_P\approx0.532134607843018\).
+The polygon has eight vertices; one maximizing vertex is
+\[
+ v=\frac{4136912499509}{2748779069440}
+    +i\frac{92225107213}{549755813888}.
+\]
+The other is its complex conjugate.
+Using
+\(C_{\rm up}=663613970941/274877906944\ge1+\sqrt2\),
+the exact test \eqref{eq:rationalstop} gives \(31\) steps.
+The same test with \(C_{\rm up}=2\) from the unconditional
+numerical-radius power inequality also gives \(31\) steps.
+Both \(30\)-step tests fail.
+A separate rational recomputation of all supporting row bounds and feasible
+line intersections reproduced \eqref{eq:exactq}.
+The reduction relative to the single-step \(113\)-iteration rate budget
+comes from enclosure geometry. Direct powers provide a stronger competing
+certificate, as quantified below.
+
+\paragraph{Stronger exact-power certificate.}
+For this same \(n=32\) input, exact rational powers of \(E=I-A\)
+give
+\begin{equation}\label{eq:power11}
+ \norm{E^{11}}_1\norm{E^{11}}_\infty
+ =
+ \frac{505768790783}{24414062500000000000000000000}
+ <10^{-16}.
+\end{equation}
+Therefore \(11\) iterations suffice for the relative target
+\(10^{-8}\) under this standard norm-product certificate.
+At \(m=10\), the corresponding product is
+\[
+ \frac{217552976919}{244140625000000000000000000}
+ >10^{-16}.
+\]
+An exact scan of powers \(1,\ldots,11\) first passes at \(11\).
+These statements were checked by a separately implemented dense rational
+matrix multiplication. The package reference baseline also uses generic
+exact matrix multiplication.
+Failure of the \(10\)-step upper-bound test does not prove that an actual
+residual cannot reach the target earlier.
+The \(11\)-step power certificate beats both numerical-range budgets of
+\(31\). This fixture demonstrates recomputability and the conservatism of
+the single-step baseline, while direct powers supply the strongest
+displayed certificate.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+Control & \(q_P\) & \shortstack{One-step\\rate}
+ & \shortstack{Exact\\power} & \(C_0\) & \(C_2\)\\
+\midrule
+Normal \(\diag(1,2)\) & \(0.333333\) & \(17\) & \(17\) & \(18\) & \(18\)\\
+\(I_{32}+\frac15N_{32}\) & \(0.216478\) & \(12\) & \(12\) & \(13\) & \(13\)\\
+Shifted sharp \(I_2+J\) & \(1.082392\) & --- & \(2\) & --- & ---\\
+Coupled family, \(n=32\) & \(0.532135\) & \(113\) & \(11\) & \(31\) & \(31\)\\
+\bottomrule
+\end{tabular}
+\caption{Sufficient relative residual budgets for \(\tau=10^{-8}\).
+Here \(C_0=1+\sqrt2\) is implemented with a rational upper bound,
+and the \(C_2=2\) column uses the unconditional numerical-radius
+power inequality for Richardson powers.
+The one-step rate uses
+\((\norm{E}_1\norm{E}_\infty)^{m/2}\).
+The exact-power column uses
+\(\norm{E^m}_1\norm{E^m}_\infty\le\tau^2\).
+Both norm certificates have constant one.
+Decimals are descriptive; stopping decisions use exact rational
+inequalities. Dashes mean that the corresponding geometric or norm-rate
+certificate does not certify contraction. Exact powers certify the
+shifted sharp control in two steps. The table compares sufficient
+certificate budgets.}
+\label{tab:controls}
+\end{table}
+
+The controls in Table~\ref{tab:controls} test distinct properties:
+degenerate geometry, a cheap dominating bound, sharpness with unsuccessful
+geometric contraction certification, and a weak one-step baseline exposed
+by exact powers.
+Where numerical-range budgets are available, the strongest displayed
+norm certificate matches or improves them.
+The cost study below measures construction, checking and direct powers
+on specified analytic fixtures and discretization models.
+Validated spectral-norm methods and block-power reuse provide additional
+comparators for a broader performance study. Certificate selection depends
+on both bound quality and construction cost.
+
+\subsection{A scalar enclosure and mesh error study}\label{sec:ellipse}
+To exercise the general-polynomial mesh certificate, rather than the
+Richardson vertex shortcut, consider
+\[
+ A=\begin{pmatrix}-1&1\\0&1\end{pmatrix},\qquad A^2=I.
+\]
+For an integer normal \((a,b)\), the support Hermitian matrix has eigenvalues
+\(\pm\tfrac12\sqrt{5a^2+b^2}\). Thus its numerical range is the ellipse
+\(x^2/(5/4)+y^2/(1/4)\le1\).
+The polynomials \(p_1(z)=z^2\) and \(p_2(z)=1-z^2\) both have
+\(M_p=\max_{\W(A)}|p|=5/4\), whereas
+\(\norm{p_1(A)}=1\) and \(\norm{p_2(A)}=0\).
+For the second scalar maximum, write the ellipse boundary as
+\(z=(\sqrt5\cos\theta+i\sin\theta)/2\). Then
+\[
+ |1-z^2|^2=25/16-(5/2)t+t^2,\qquad t=\cos^2\theta\in[0,1].
+\]
+The convex quadratic has maximum \(25/16\) at \(t=0\).
+The zero matrix polynomial is a deliberate negative control: a scalar
+supremum certificate need not detect annihilation at the matrix.
+
+The study compares the shipped Gershgorin support construction with an
+experimental analytic support producer that rounds the displayed support
+outward. This experimental producer exercises the support-accuracy
+interface; the shipped backend uses Gershgorin bounds. We cross resolutions
+\(k=1,2,4,8\), square-root precisions \(b=8,24,40\), and
+\(s=4,16,64\) segments per edge, for both producers and polynomials:
+144 cases in total. If \(\bar h_q\) is the unnormalized produced support,
+set
+\[
+ R_b=\operatorname{sqrt\_upper}(5/4,b),\qquad
+ \eta=\max_q\frac{\bar h_q-
+ \max\{0,\operatorname{sqrt\_upper}((5a^2+b_q^2)/4,b)-2^{-b}\}}{k},
+\]
+where \(q=(a,b_q)\) distinguishes a normal coordinate from the bit precision.
+All normals have length at least \(k\), and their angular gap satisfies
+\(\Delta\le\arctan(1/k)\le1/k\). Consequently the following rational
+relaxations of Proposition~\ref{prop:geometry} suffice:
+\[
+ \rho=\frac{R_b+\eta}{1-1/(8k^2)},\qquad
+ d_P=\eta+\frac{R_b+\rho}{2k},\qquad D_p=2\rho.
+\]
+They use \(\cos x\ge1-x^2/2\) and \(\sin x\le x\), avoiding unchecked
+trigonometric evaluations. The mesh radius \(\delta\) is an outward upper
+bound for the longest edge divided by \(2s\). Exact rational assertions
+check every vertex radius and all 144 inequalities
+\[
+ 0\le U_p-5/4\le 2\rho(d_P+\delta)+2^{-b}.
+\]
+The CSV preserves the exact rationals for each term; decimal columns and
+Table~\ref{tab:ellipse} are descriptive only.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Support producer & \(k\) & \(U_{z^2}\) & \(U_{1-z^2}\) & Excess budget\\
+\midrule
+Analytic & 1 & 1.290326 & 1.278939 & 3.090163\\
+Analytic & 2 & 1.271082 & 1.268033 & 1.329167\\
+Analytic & 4 & 1.261034 & 1.260257 & 0.642659\\
+Analytic & 8 & 1.255562 & 1.255367 & 0.318785\\
+Gershgorin & 1 & 2.361888 & 1.426620 & 7.223737\\
+Gershgorin & 2 & 2.321651 & 1.343508 & 3.939560\\
+Gershgorin & 4 & 2.307298 & 1.313327 & 2.710893\\
+Gershgorin & 8 & 2.302639 & 1.304187 & 2.144144\\
+\bottomrule
+\end{tabular}
+\caption{Scalar mesh bounds at 40 root bits and 64 segments per edge.
+Both true scalar suprema are \(5/4\). The last column bounds
+\(U_p-M_p\), with the same conservative budget for both polynomials.
+These are scalar supremum bounds before applying a matrix theorem constant.}
+\label{tab:ellipse}
+\end{table}
+
+For analytic supports, \(\eta\le2^{-b}/k\); finer directions and meshes
+reduce the observed excess. The Gershgorin polygon contains
+\(\pm3/2\) for every displayed resolution: its support is
+\(|a|+\tfrac12\sqrt{a^2+b_q^2}\), which dominates the support of those points.
+Hence its \(z^2\) supremum is at least \(9/4\), leaving an irreducible
+excess of at least one over the true \(5/4\), even with arbitrarily many
+directions. Mesh refinement alone cannot correct support slack.
+The producer-based experiment uses shared geometry helpers and checks
+the finite error accounting. The accompanying independent arithmetic
+oracle recomputes this study's exact fields using separate root, clipping,
+and polynomial-evaluation implementations.
+
+\subsection{Measured certificate costs}\label{sec:cost}
+We predefine ten fixtures: the five comparison controls, the
+\(n=2,t=99/100\) nilpotent counterexample, the coupled family at \(n=8\),
+and three centered-difference matrices for
+\(-\nu u''+v u'+r u\) on \((0,1)\) with homogeneous Dirichlet boundaries.
+The latter use \(\nu=1/100\), \(v=1/10\), \(r=1\),
+\(h=1/(n+1)\), \(n=8,16,32\), diagonal \(d=1+2\nu/h^2\),
+lower diagonal \(-\nu/h^2-v/(2h)\), and upper diagonal
+\(-\nu/h^2+v/(2h)\). We set \(\alpha=1/d\).
+These specified mathematical models supply reproducible discretization
+fixtures for the certificate-cost comparison.
+
+Every request uses eight directions, 40 root bits, relative tolerance
+\(10^{-8}\), and the unconditional Richardson constant two. Three
+sequential observations time each complete producer call, checker call,
+and dense exact-power search, after one untimed \(1\times1\) producer
+warmup. Construction includes the one-step baseline; checking includes
+full regeneration and JSON evidence comparison. The direct-power search
+checks every smaller positive power up to the first certificate or the
+fixed cap 64. A separate norm-only call normalizes the request, constructs
+\(I-\alpha A\), computes its one-step norm product and searches its budget,
+using shared arithmetic helpers while skipping all support geometry. Serialization time is excluded from construction; compact
+UTF-8 JSON sizes measure evidence size, not peak memory.
+The recorded environment is Python 3.11.5 on Windows;
+\nolinkurl{results/certificate-cost-study.json} stores its full platform,
+all observations and source hash. Timings are environment-specific
+medians of certificate construction, checking, and reference calls.
+
+\begin{table}[t]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Fixture & NR & One & Power & Build & Check & Norm & Power\\
+\midrule
+Normal & 18 & 17 & 17 & 1.05 & 1.07 & 0.08 & 0.45\\
+Nilpotent \(n=32,t=1/5\) & 13 & 12 & 12 & 85.78 & 85.90 & 7.14 & 69.58\\
+Coupled \(n=32\) & 31 & 113 & 11 & 84.36 & 85.10 & 7.16 & 72.92\\
+Shifted sharp & --- & --- & 2 & 1.17 & 1.16 & 0.05 & 0.08\\
+Slow scalar & 1902 & 1833 & cap & 3.98 & 3.96 & 1.47 & 0.86\\
+Nilpotent \(n=2,t=99/100\) & 31 & 1833 & 2 & 2.75 & 2.75 & 1.49 & 0.08\\
+Coupled \(n=8\) & 31 & 113 & 11 & 6.20 & 6.24 & 0.54 & 4.12\\
+Discretization \(n=8\) & 41 & 39 & 29 & 6.28 & 6.29 & 0.53 & 12.73\\
+Discretization \(n=16\) & 121 & 116 & cap & 22.50 & 22.73 & 1.96 & 133.98\\
+Discretization \(n=32\) & 427 & 411 & cap & 88.32 & 90.38 & 7.75 & 738.15\\
+\bottomrule
+\end{tabular}
+\caption{Three-observation median certificate timings.
+NR and One denote numerical-range and one-step iteration budgets;
+the first Power column is an iteration budget. Build, Check, Norm and
+the last Power column are median milliseconds. ``cap'' is an unsuccessful
+64-power run and must not be ranked as a successful competing certificate.
+A dash indicates absence of a geometric contraction certificate.}
+\label{tab:cost}
+\end{table}
+
+For the coupled \(n=32\) fixture, the exact-power certificate is both
+stronger and cheaper to construct than the numerical-range certificate
+in these observations. All three discretization cases are already
+certified by the cheaper one-step norm route with smaller budgets:
+39 versus 41, 116 versus 121, and 411 versus 427, respectively.
+The norm-only timing separates that route's work from unnecessary support
+construction. At sizes 16 and 32 the direct-power search is inconclusive
+at its cap; this does not make numerical-range geometry necessary for
+certification. Longer or block-power searches could change both cost
+and bound quality. The successful norm-based comparators account for the
+displayed ordering of certificate budgets and construction costs.
+The numerical-range certificate evidence ranges from 1647 to 15263 bytes
+on these fixtures. The measured quantities are certificate timings and
+evidence sizes; solver runtime, residual histories, peak memory, and
+validated spectral-norm comparisons require a broader study.
+
+\section{Limitations, reproducibility, and research use}\label{sec:limits}
+The results certify polynomial operators for the stated exact inputs.
+Physical model adequacy and finite-precision solver behavior require
+their corresponding model and roundoff analyses. Certificate selection
+depends on bound strength and construction cost.
+On the featured fixture, the standard exact-power certificate is stronger
+than either numerical-range mode.
+Coefficient growth can make the derivative estimate large.
+A basis other than shifted monomials may reduce this effect, but requires a
+corresponding proved derivative bound.
+
+The exact rational scalar prototype is restricted.
+Sparse validated eigenvalue methods, scalable half-plane intersection,
+general matrix-coefficient sampling, adaptive meshes, and a verified
+floating-point solver interface are further engineering tasks.
+The enclosure excess estimate requires validated support accuracy if it is
+used as a quantitative convergence bound.
+Without that evidence, the main certificate can remain valid but
+conservative.
+
+The analytic controls are completely specified in
+Section~\ref{sec:controls}; they can be independently reconstructed without
+repository code or a random seed.
+The accompanying \texttt{nrcert} version 0.1.0 source bundle includes the
+exact requests, generated certificates, a 30-row comparison CSV, and
+command logs. A wheel installed into a separate Python 3.11.5 environment
+passed all 44 tests, including evidence mutation and recomputation tests,
+and all six command-line examples. The commands are reproduced by
+\nolinkurl{reproduce/verify_package.py} in the complete source distribution,
+which also contains the test suite; the environment and exit statuses
+are recorded in \nolinkurl{audit/installed-package-verification.json}.
+Producer and checker share an implementation. The checker recomputes the
+complete normalized request and compares regenerated evidence, providing
+reproducibility and tamper detection relative to that implementation.
+Separate arithmetic validation is supplied by the independent ellipse
+oracle for its specified finite study. Together, the exact fixtures,
+regeneration checks, and recorded comparisons support the prototype's
+certificate specification and error accounting.
+Operational limits for this version are dimension 64, degree 128,
+direction resolution 8 (64 normals), 128 mesh segments per edge,
+iteration search cap 100000, and square-root precision 8--256 bits.
+The reference power routine permits at most 128 powers; this study uses 64.
+Raw rational strings and derived factors have 8192-character limits, with
+8192-bit raw and 12000-bit derived numerator/denominator budgets.
+Compact decimal exponents are checked before conversion, including
+supported Unicode decimal digits. Matrix dimension, degree, mesh size and
+iteration search are capped; exact arithmetic can still be expensive
+within those caps. Factored witnesses avoid output expansion; power-comparison
+costs still depend on exponents and rational operand sizes. Malformed or
+over-budget input raises the documented error. The interface supports
+research computation under these resource limits.
+Exploratory floating-point norms are recorded as diagnostics.
+
+\section*{Generative AI disclosure}
+OpenAI Codex agents contributed substantially to source discovery, literature synthesis, and mathematical exposition.
+
+\begingroup\small
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+\endgroup
+\end{document}

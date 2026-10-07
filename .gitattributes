@@ -1,0 +1,3 @@
+# Scientific provenance records use byte-based SHA-256 hashes. Preserve source/data bytes across platforms.
+* -text
+*.pdf binary

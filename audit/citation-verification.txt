@@ -1,0 +1,123 @@
+Numerical manuscript reference verification — 7 October 2026
+
+Thirty distinct cited references. This ledger verifies bibliographic identity and appropriate support for contextual statements; it does not verify the cited theorems independently. Locations were refreshed against the public manuscript source. See citation-verification.json for primary URLs, per-reference scope and source hashes.
+
+CrouzeixPalencia2017: Michel Crouzeix and César Palencia. The Numerical Range is a (1+sqrt(2))-Spectral Set. SIAM Journal on Matrix Analysis and Applications 38(2), 649–655 (2017). DOI: 10.1137/17M1116672.
+Primary sources: https://epubs.siam.org/doi/10.1137/17M1116672;https://arxiv.org/abs/1702.00668
+Publisher abstract explicitly says complete (1+sqrt2)-spectral set. The primary paper's complete functional calculus supports the matrix-valued polynomial theorem interface.
+
+Johnson1978: Charles R. Johnson. Numerical Determination of the Field of Values of a General Complex Matrix. SIAM Journal on Numerical Analysis 15(3), 595–602 (June 1978). DOI: 10.1137/0715039.
+Primary sources: https://epubs.siam.org/doi/10.1137/0715039
+Primary abstract states boundary points/tangents, convergent computation and an error measure. Official Chebfun also documents the directional Hermitian computation.
+
+LoiselMaxwell2018: Sébastien Loisel and Peter Maxwell. Path-Following Method to Determine the Field of Values of a Matrix with High Accuracy. SIAM Journal on Matrix Analysis and Applications 39(4), 1726–1749 (2018). DOI: 10.1137/17M1148608.
+Primary sources: https://epubs.siam.org/doi/10.1137/17M1148608
+Primary abstract gives an ODE/path-following algorithm, formal error bounds for specific matrix classes and cost-error comparisons. Current prose preserves those restrictions.
+
+Trefethen2010: Nick Trefethen. Field of values and numerical abscissa. Official Chebfun example, November 2010. Software documentation.
+Primary sources: https://www.chebfun.org/examples/linalg/FieldOfValues.html
+Page expressly attributes the standard method to Johnson (1978) and includes the FOV implementation.
+
+BeckermannReichel2009: Bernhard Beckermann and Lothar Reichel. Error Estimates and Evaluation of Matrix Functions via the Faber Transform. SIAM Journal on Numerical Analysis 47(5), 3849–3883 (2009). DOI: 10.1137/080741744.
+Primary sources: https://epubs.siam.org/doi/10.1137/080741744
+Primary abstract directly relates Faber transforms on the field of values to improved polynomial Arnoldi and rational Arnoldi error bounds.
+
+CrouzeixGreenbaum2019: Michel Crouzeix and Anne Greenbaum. Spectral Sets: Numerical Range and Beyond. SIAM Journal on Matrix Analysis and Applications 40(3), 1087–1101 (2019). DOI: 10.1137/18M1198417.
+Primary sources: https://epubs.siam.org/doi/10.1137/18M1198417;https://arxiv.org/abs/1803.10904
+Publisher abstract and primary Section 7 explicitly give GMRES and rational Krylov convergence applications.
+
+SaadSchultz1986: Youcef Saad and Martin H. Schultz. GMRES: A Generalized Minimal Residual Algorithm for Solving Nonsymmetric Linear Systems. SIAM Journal on Scientific and Statistical Computing 7(3), 856–869 (July 1986). DOI: 10.1137/0907058.
+Primary sources: https://epubs.siam.org/doi/abs/10.1137/0907058?download=true&journalCode=sijcd4
+Primary abstract says residual-norm minimization over a Krylov subspace at each step. The existing corollary is restricted to the exact mathematical method.
+
+LoristSchwenninger2026: Emiel Lorist and Felix L. Schwenninger. A solution to Crouzeix's conjecture. arXiv:2608.03841v2, math.CA. Version 1: 4 August 2026; version 2: 17 August 2026.
+Primary sources: https://arxiv.org/abs/2608.03841v2;https://arxiv.org/html/2608.03841v2
+Actual HTML Theorem 3 states scalar 2-spectrality for bounded Hilbert-space operators and rational functions with poles outside the numerical-range closure. The manuscript labels this as a preprint assertion and does not infer the complete inequality.
+
+CrouzeixGreenbaum2026Update: Michel Crouzeix and Anne Greenbaum. Update to: Spectral sets: Numerical range and beyond. arXiv:2609.22460v2, math.NA. Version 1: 18 September 2026; version 2: 23 September 2026.
+Primary sources: https://arxiv.org/abs/2609.22460v2;https://arxiv.org/html/2609.22460v2
+Actual abstract and text use Lorist–Schwenninger to lower earlier constants, including annular 2-spectral sets and convex regions with circular cutouts. No complete universal claim is attributed.
+
+CrouzeixGreenbaum2025: Michel Crouzeix and Anne Greenbaum. A New Proof that the Numerical Range is a Complete 2-Spectral Set for Weighted Shift Matrices. arXiv:2508.12768v1, math.FA. Version 1: 18 August 2025.
+Primary sources: https://arxiv.org/abs/2508.12768v1;https://arxiv.org/html/2508.12768v1
+Actual HTML defines the weighted-shift matrix class and gives the completely bounded result. It supports the restricted-class prior-art and sharp-control discussion.
+
+AhagCzyzVirtanen2026: Per Åhag, Rafał Czyż and Jani Virtanen. The Complete Crouzeix Conjecture in Dimension Three and the Clouâtre–Ostermann–Ransford conjecture. arXiv:2608.27346v4, math.CV. Versions: 27 August, 1 September, 9 September, and 21 September 2026.
+Primary sources: https://arxiv.org/abs/2608.27346v4;https://arxiv.org/html/2608.27346v4
+Actual Theorem 1.1 asserts complete 2-spectrality for base-matrix dimension n <= 3 and arbitrary coefficient size. This directly supports the manuscript's restricted-dimensional claim.
+
+OAI:A-direct-proof-of-the-complete-Crouzeix-inequality-September-26-2026: OpenAI (corporate author supplied by the source). A direct proof of the complete Crouzeix inequality. OpenAI Math Release preprint, manuscript dated 26 September 2026. Exact repository commit: adc7f1241b42e322a6451854ab7e4b4c146bf78a.
+Primary sources: https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-direct-proof-of-the-complete-Crouzeix-inequality-September-26-2026/README.md;https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-direct-proof-of-the-complete-Crouzeix-inequality-September-26-2026/build/main.tex
+Actual source main theorem asserts complete constant 2 for positive base/coefficient dimensions and arbitrary polynomial degree, including degenerate numerical ranges. This verifies the attributed claim, not its proof or Lean compilation.
+
+OpenAIRepository2026: OpenAI. Repository README at commit adc7f1241b42e322a6451854ab7e4b4c146bf78a. The bibliographic title is a descriptive resource label; the actual heading is Readme. Repository documentation.
+Primary sources: https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/README.md;https://api.github.com/repos/openai/math/commits/adc7f1241b42e322a6451854ab7e4b4c146bf78a
+README says mathematical manuscripts/supporting artifacts come from an internal model and describes mixed verification stages.
+
+OpenAIScope325: OpenAI. The complete Crouzeix conjecture. Lean scope document for family 325 at commit adc7f1241b42e322a6451854ab7e4b4c146bf78a. Source documentation.
+Primary sources: https://raw.githubusercontent.com/openai/math/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/docs/325.md
+Actual scope text asserts sharp complete constant 2 and lists comparator links. The current paper correctly says scope statement is not an independent compilation report.
+
+Rump2010: Siegfried M. Rump. Verification methods: Rigorous results using floating-point arithmetic. Acta Numerica 19, 287–449 (2010). DOI: 10.1017/S096249291000005X. Published 10 May 2010.
+Primary sources: https://www.cambridge.org/core/journals/acta-numerica/article/abs/verification-methods-rigorous-results-using-floatingpoint-arithmetic/770FE58E5293985CCAB770AF09C4F3FF
+Primary extract directly discusses mathematically rigorous results from computational verification and floating-point arithmetic.
+
+Tadmor2025: Eitan Tadmor. On the stability of Runge–Kutta methods for arbitrarily large systems of ODEs. Communications on Pure and Applied Mathematics 78(4), 821–855 (2025). DOI: 10.1002/cpa.22238. First online 20 November 2024; final issue year 2025.
+Primary sources: https://doi.org/10.1002/cpa.22238;https://math.umd.edu/~tadmor/pub/linear-stability/Tadmor%20RK%20are%20stable%20CPAM2025.pdf
+Section 3.2 equations3.3–3.4 directly support the classical numerical-radius power inequality and norm bound; Sections3–5 demonstrate preexisting RK numerical-range stability applications.
+
+Crouzeix2007: [object Object]
+Primary sources: https://www.sciencedirect.com/science/article/pii/S002212360600440X
+
+
+BadeaCrouzeixDelyon2006: [object Object]
+Primary sources: https://link.springer.com/article/10.1007/s00209-005-0857-y;https://arxiv.org/abs/math/0501184;https://arxiv.org/pdf/math/0501184
+
+
+DelyonDelyon1999: [object Object]
+Primary sources: https://smf.emath.fr/node/42955;https://smf.emath.fr/sites/default/files/2019-01/smf_bull_127_25-41__sample.pdf;https://www.numdam.org/item/10.24033/bsmf.2340.pdf
+
+
+Beckermann2005: [object Object]
+Primary sources: https://www.sciencedirect.com/science/article/pii/S1631073X05001755;https://pro.univ-lille.fr/fileadmin/user_upload/pages_pros/bernhard_beckermann/abs/Beckermann_comptes_rendus.pdf
+
+
+GreenbaumPtakStrakos1996: [object Object]
+Primary sources: https://epubs.siam.org/doi/abs/10.1137/S0895479894275030?download=true&journalCode=sjmael;https://www.karlin.mff.cuni.cz/~strakos/publications.html
+
+
+EiermannErnst2001: [object Object]
+Primary sources: https://www.cambridge.org/core/journals/acta-numerica/article/abs/geometric-aspects-of-the-theory-of-krylov-subspace-methods/5D5142ABA62629A62A8272F9F59B6F26
+
+
+Higham2008: [object Object]
+Primary sources: https://epubs.siam.org/doi/10.1137/1.9780898717778;https://epubs.siam.org/doi/10.1137/1.9780898717778.fm;https://eprints.maths.manchester.ac.uk/1067/
+
+
+Higham2002: [object Object]
+Primary sources: https://epubs.siam.org/doi/book/10.1137/1.9780898718027;https://epubs.siam.org/doi/10.1137/1.9780898718027.ch5
+
+
+SimonciniSzyld2003: [object Object]
+Primary sources: https://epubs.siam.org/doi/10.1137/S1064827502406415;https://cris.unibo.it/handle/11585/1036419
+
+
+Rump2006: [object Object]
+Primary sources: https://link.springer.com/article/10.1007/s10543-006-0056-1;https://www.tuhh.de/ti3/paper/rump/Ru06c.pdf
+
+
+AlMohyHigham2011: [object Object]
+Primary sources: https://epubs.siam.org/doi/10.1137/100788860;https://eprints.maths.manchester.ac.uk/1591/
+
+
+HighamTisseur2000: [object Object]
+Primary sources: https://epubs.siam.org/doi/10.1137/S0895479899356080;https://eprints.maths.manchester.ac.uk/321/1/35608.pdf
+
+
+LewisOverton2020: [object Object]
+Primary sources: https://epubs.siam.org/doi/10.1137/18M1236289;https://cs.nyu.edu/overton/papers/pdffiles/NumerRad.pdf
+
+
+HochbruckOstermann2010: [object Object]
+Primary sources: https://na.math.kit.edu/bibtexbrowser.php?bib=db%2Fpublications.bib&key=10.1017-S0962492910000048;https://na.math.kit.edu/download/papers/acta-final.pdf
+

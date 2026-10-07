@@ -1,0 +1,10 @@
+{
+  "kind": "richardson",
+  "matrix": [
+    [
+      "1/100"
+    ]
+  ],
+  "alpha": "1",
+  "tolerance": "1/100000000"
+}

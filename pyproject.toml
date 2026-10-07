@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "numerical-range-certificates"
+version = "0.1.0"
+authors = [{name = "Robin Gounder", email = "robin@gounder.com"}]
+description = "Exact-rational polynomial matrix and Richardson residual certificates"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["numerical-range", "matrix-polynomials", "certificates", "Richardson"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[project.scripts]
+nrcert = "nrcert.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.urls]
+Homepage = "https://github.com/Kohze/numerical-range-certificates"
+Repository = "https://github.com/Kohze/numerical-range-certificates"
+Issues = "https://github.com/Kohze/numerical-range-certificates/issues"

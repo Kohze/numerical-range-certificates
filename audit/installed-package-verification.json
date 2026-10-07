@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "python": "3.11.5",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "installed_import_verified": true,
+  "tests_executed": true,
+  "tests_passed": 44,
+  "comparison_rows": 30,
+  "console_examples_passed": 6,
+  "package_source_sha256": {
+    "__init__.py": "74f0d7cc6c5898b9fb069a89f768be5e82bf0d790cb3e6a638ceca8deb45de48",
+    "__main__.py": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+    "checker.py": "77d742e1cabc7b45486f3ac009b3b28220d77e351fb58262ae2ee41be3bcbd66",
+    "cli.py": "ea510e5e9a11dd34400085f4a3814956490f6156661f40ad2c0397b288547704",
+    "core.py": "045631803c3e64e794a387a1a47e5e373220dee227f060ea2dc6a09db08e8397",
+    "reference.py": "48363c29139ae431a6694f1e63c4268046151044c6d0ece8672537fbf34f1b9c"
+  },
+  "commands": [
+    {
+      "name": "installed-tests",
+      "exit_code": 0
+    },
+    {
+      "name": "comparison-reproduction",
+      "exit_code": 0
+    },
+    {
+      "name": "console-version",
+      "exit_code": 0
+    },
+    {
+      "name": "certify-normal",
+      "exit_code": 0
+    },
+    {
+      "name": "check-normal",
+      "exit_code": 0
+    },
+    {
+      "name": "certify-bidiagonal32",
+      "exit_code": 0
+    },
+    {
+      "name": "check-bidiagonal32",
+      "exit_code": 0
+    },
+    {
+      "name": "certify-coupled32",
+      "exit_code": 0
+    },
+    {
+      "name": "check-coupled32",
+      "exit_code": 0
+    },
+    {
+      "name": "certify-shifted_j2",
+      "exit_code": 2
+    },
+    {
+      "name": "check-shifted_j2",
+      "exit_code": 2
+    },
+    {
+      "name": "certify-slow_contraction",
+      "exit_code": 0
+    },
+    {
+      "name": "check-slow_contraction",
+      "exit_code": 0
+    },
+    {
+      "name": "certify-polynomial_segment",
+      "exit_code": 0
+    },
+    {
+      "name": "check-polynomial_segment",
+      "exit_code": 0
+    }
+  ]
+}

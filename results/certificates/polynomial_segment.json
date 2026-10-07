@@ -1,0 +1,144 @@
+{
+  "algorithm": "rational-gershgorin-polygon-v1",
+  "assumption": "Crouzeix--Palencia (2017): C = 1 + sqrt(2)",
+  "constant_upper": "663613970941/274877906944",
+  "evidence": {
+    "derivative_upper": "28/9",
+    "induced_norm_coefficient_baseline": "49/9",
+    "matrix_norm_upper": "524436855634956853549565/1360041547066457821544448",
+    "matrix_norm_upper_squared": "275034015548280576075629116305713735139911689225/1849713009746924005851538616406545696752039624704",
+    "max_sample_squared": "1/81",
+    "maximizing_sample": [
+      "1",
+      "0"
+    ],
+    "mesh_radius_upper": "1/64",
+    "radius_upper": "2",
+    "sample_count": 33,
+    "scalar_supremum_upper": "790273982465/4947802324992",
+    "status": "bound_certified"
+  },
+  "request": {
+    "coefficients": [
+      "1",
+      "-4/3",
+      "4/9"
+    ],
+    "direction_resolution": 1,
+    "kind": "polynomial",
+    "matrix": [
+      [
+        "1",
+        "0"
+      ],
+      [
+        "0",
+        "2"
+      ]
+    ],
+    "mode": "established",
+    "samples_per_edge": 32,
+    "sqrt_bits": 40
+  },
+  "schema": "nrcert/1",
+  "support_evidence": [
+    {
+      "gershgorin_row_uppers": [
+        "-1",
+        "-2"
+      ],
+      "normal": [
+        -1,
+        -1
+      ],
+      "upper": "-1"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "-1",
+        "-2"
+      ],
+      "normal": [
+        -1,
+        0
+      ],
+      "upper": "-1"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "-1",
+        "-2"
+      ],
+      "normal": [
+        -1,
+        1
+      ],
+      "upper": "-1"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "0",
+        "0"
+      ],
+      "normal": [
+        0,
+        -1
+      ],
+      "upper": "0"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "0",
+        "0"
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "upper": "0"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "1",
+        "2"
+      ],
+      "normal": [
+        1,
+        -1
+      ],
+      "upper": "2"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "1",
+        "2"
+      ],
+      "normal": [
+        1,
+        0
+      ],
+      "upper": "2"
+    },
+    {
+      "gershgorin_row_uppers": [
+        "1",
+        "2"
+      ],
+      "normal": [
+        1,
+        1
+      ],
+      "upper": "2"
+    }
+  ],
+  "vertices": [
+    [
+      "1",
+      "0"
+    ],
+    [
+      "2",
+      "0"
+    ]
+  ]
+}
