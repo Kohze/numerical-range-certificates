@@ -1,0 +1,17 @@
+{
+  "paper": "numerical-range-certificates",
+  "table_count": 3,
+  "row_separator_count": 19,
+  "previous_source_sha256": "54c579448fd68dd7578d9100e2f7b13dcb0a950a137c2da9a937f07a2fa3386a",
+  "current_source_sha256": "07eec1a0dadef45420c5f39e6b831d7c8a0c406ab23f5a6343383bdc861df5ee",
+  "scientific_content_unchanged": true,
+  "date": "2026-10-07",
+  "changes": [
+    "Thin horizontal dividers between every pair of data rows",
+    "Additional row padding and whitespace around tables",
+    "Continuation headers retained; duplicate boundary rule removed"
+  ],
+  "pdf_sha256": "e6dd4799311e0177b6c020732f4cc74658ba464e88411174cfdb7d89c2c30823",
+  "pages": 19,
+  "status": "passed"
+}

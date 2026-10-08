@@ -128,3 +128,10 @@ Version 0.1.0 is an alpha release, available with data and installation files fr
 ## Licensing
 
 The software, tests, experiment/reproduction programs and package documentation are MIT-licensed: see [LICENSE](LICENSE). The manuscript source and PDF in `paper/` retain their author's copyright under [paper/LICENSE](paper/LICENSE); the software licence does not grant a manuscript reuse licence.
+
+## Manuscript layout revision, 8 October 2026
+
+The current PDF and LaTeX include clearly separated table rows and additional
+space around tables. The mathematical content, bibliography, software, and
+scientific data are unchanged. The `paper-2026-10-08` release records this
+revision separately from earlier software and manuscript releases.

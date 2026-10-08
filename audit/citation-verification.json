@@ -6,7 +6,7 @@
     "distinct_entries": 30,
     "distinct_cited_entries": 30
   },
-  "manuscript_sha256": "54c579448fd68dd7578d9100e2f7b13dcb0a950a137c2da9a937f07a2fa3386a",
+  "manuscript_sha256": "07eec1a0dadef45420c5f39e6b831d7c8a0c406ab23f5a6343383bdc861df5ee",
   "bibliography_sha256": "802a538d31c3ed7e62bc056a8f15a6e020eca0f159563f04200a50f808da0482",
   "references": [
     {
@@ -760,5 +760,6 @@
       },
       "role": "published scholarly article"
     }
-  ]
+  ],
+  "layout_revision": "2026-10-08 public release: table dividers and spacing; mathematical content and cited sources unchanged. See audit/table-layout-revision.json."
 }
